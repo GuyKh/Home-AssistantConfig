@@ -1,0 +1,17 @@
+sensor.deluge_down_speed:
+  friendly_name: Deluge Download Speed
+  icon: mdi:download-network
+sensor.deluge_up_speed:
+  friendly_name: Deluge Upload Speed
+  icon: mdi:upload-network
+sensor.deluge_status:
+  friendly_name: Deluge Status
+  icon: mdi:water
+switch.deluge:
+  friendly_name: Paused / Active
+  icon: mdi:play-pause
+input_boolean.weather:
+  custom_ui_state_card: custom-weather-card
+  config:
+    weather: weather.yweather
+    sun: sun.sun
