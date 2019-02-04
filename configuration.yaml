@@ -120,7 +120,7 @@ sensor:
         arg: wlan0
   - platform: filesize
     file_paths:
-      - /home/homeassistant/.homeassistant/home-assistant_v2.db
+      - home-assistant_v2.db
   - platform: time_date
     display_options:
       -  'time'
