@@ -1,6 +1,8 @@
 # Example .gitignore file for your config dir.
 # A * ensures that everything will be ignored.
 *
+__pycache__/
+*.py[cod]
 
 # You can whitelist files/folders with !, these will not be ignored.
 !*.yaml
@@ -8,10 +10,18 @@
 !*.md
 !*.sh
 !bin
-!custom_components
-!extraconfig
-!packages
-!themes
+!custom_components/
+!custom_components/*
+!custom_components/**/*
+!icons/
+!icons/*
+!extraconfig/
+!extraconfig/*
+!extraconfig/**/*
+!packages/
+!packages/*
+!themes/
+!themes/*
 
 
 # Ignore folders.
