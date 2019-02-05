@@ -118,9 +118,6 @@ sensor:
         arg: wlan0
       - type: network_out
         arg: wlan0
-  - platform: filesize
-    file_paths:
-      - home-assistant_v2.db
   - platform: time_date
     display_options:
       -  'time'
@@ -139,14 +136,6 @@ sensor:
       - 'upload_speed'
   - platform: template
     sensors:
-      hline_1:
-        value_template: hline
-      hline_2:
-        value_template: hline
-      hline_3:
-        value_template: hline
-      hline_4:
-        value_template: hline
       guy_presence:
         friendly_name: 'Guy Presence'
         value_template: '{% if is_state("device_tracker.samsung_s8", "home") or is_state("device_tracker.samsung_s8_bt"  or is_state("device_tracker.samsung_gear_s2", "home" )  or is_state("device_tracker.samsung_gear_s2_bt", "home" ), "home" ) %}home{% else %}away{% endif %}'
