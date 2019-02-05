@@ -118,6 +118,9 @@ sensor:
         arg: wlan0
       - type: network_out
         arg: wlan0
+  - platform: filesize	
+    file_paths:	
+      - home-assistant_v2.db
   - platform: time_date
     display_options:
       -  'time'
