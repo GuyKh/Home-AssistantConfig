@@ -205,7 +205,7 @@ media_player:
   - platform: samsungtv
     host: !secret samsung_ip
     port: 8001
-    mac: !secret '00:00:00:00:00:00'
+    mac: !secret samsung_mac
     timeout: 3
 
 ifttt:
