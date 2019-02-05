@@ -2,10 +2,10 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: 32.0798564
-  longitude: 34.793253
+  latitude: !secret longitude
+  longitude: !secret latitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 30
+  elevation: !secret elevation
   # metric for Metric, imperial for Imperial
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -61,9 +61,9 @@ http:
   # Secrets are defined in the file secrets.yaml
     api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-    base_url: guykhmel.duckdns.org:8123
-    ssl_certificate: /etc/letsencrypt/live/guykhmel.duckdns.org/fullchain.pem
-    ssl_key: /etc/letsencrypt/live/guykhmel.duckdns.org/privkey.pem
+    base_url: !secret duckdns_url
+    ssl_certificate: !secret ssl_certificate
+    ssl_key: !secret ssl_key
 
 logger:
   default: info
@@ -120,7 +120,7 @@ sensor:
         arg: wlan0
   - platform: filesize
     file_paths:
-      - /home/homeassistant/.homeassistant/home-assistant_v2.db
+      - home-assistant_v2.db
   - platform: time_date
     display_options:
       -  'time'
@@ -129,8 +129,8 @@ sensor:
     name: HA Installed Version
     scan_interval: 86400
   - platform: deluge
-    host: 192.168.1.123
-    port: 58846
+    host: !secret deluge_ip
+    port: !secret deluge_port
     username: !secret deluge_username
     password: !secret deluge_password
     monitored_variables:
@@ -139,14 +139,6 @@ sensor:
       - 'upload_speed'
   - platform: template
     sensors:
-      hline_1:
-        value_template: hline
-      hline_2:
-        value_template: hline
-      hline_3:
-        value_template: hline
-      hline_4:
-        value_template: hline
       guy_presence:
         friendly_name: 'Guy Presence'
         value_template: '{% if is_state("device_tracker.samsung_s8", "home") or is_state("device_tracker.samsung_s8_bt"  or is_state("device_tracker.samsung_gear_s2", "home" )  or is_state("device_tracker.samsung_gear_s2_bt", "home" ), "home" ) %}home{% else %}away{% endif %}'
@@ -183,12 +175,12 @@ binary_sensor:
 light:
   - platform: xiaomi_miio
     name: Xiaomi Philips Smart LED Ball
-    host: 192.168.1.114
+    host: !secret miio_hue_ip
     token: !secret xiaomi_hue_token
     model: philips.light.bulb
 #  - platform: yeelight
 #    devices:
-#      192.168.1.113:
+#      !secret yeelight_ip
 #        name: Living Room
 #        transition: 1000
 #        use_music_mode: True #(defaults to False)
@@ -197,15 +189,15 @@ light:
 
 media_player:
   - platform: kodi
-    host: 192.168.1.102
+    host: !secret kodi_ip
   - platform: cast
-    host: 192.168.1.101
+    host: !secret cast_one_ip
   - platform: cast
-    host: 192.168.1.112
+    host: !secret google_home_one_ip
   - platform: samsungtv
-    host: 192.168.1.116
+    host: !secret samsung_ip
     port: 8001
-    mac: 84:A4:66:FF:2B:DE
+    mac: !secret samsung_mac
     timeout: 3
 
 ifttt:
@@ -214,7 +206,7 @@ ifttt:
 device_tracker:
   - platform: bluetooth_tracker
   - platform: snmp
-    host: 192.168.1.1
+    host: !secret router_ip
     community: public
     baseoid: 1.3.6.1.2.1.3.1.1.2
     track_new_devices: no
@@ -224,12 +216,12 @@ telegram_bot:
   - platform: polling
     api_key: !secret telegram_key
     allowed_chat_ids:
-     - 280087983
+     - !secret telegram_chat_id
 
 notify:
   - name: HA_Tele
     platform: telegram
-    chat_id: 280087983
+    chat_id: !secret telegram_chat_id
   - name: slack_notifier
     platform: slack
     api_key: !secret slack_key
@@ -240,7 +232,7 @@ notify:
     gcm_sender_id: !secret google_sender_key
   - name: twilio_whatsapp
     platform: twilio_whatsapp
-    from_number: whatsapp:+14155238886
+    from_number: !secret twilio_number
 
 google_assistant:
   project_id: homeassistant-8d58d
@@ -275,16 +267,16 @@ weather:
 
 camera:
   - platform: foscam
-    ip: 192.168.1.120
+    ip: !secret foscam_ip
     username: !secret foscam_username
     password: !secret foscam_password
-    port: 80
+    port: !secret foscam_port
     name: Foscam Native
   - platform: mjpeg
     mjpeg_url: !secret foscam_url
     name: Foscam MJPEG
   - platform: mjpeg
-    mjpeg_url: http://192.168.1.118:18080/video
+    mjpeg_url: !secret mjpeg_url
     name: Android Webcam MJPEG
     username: !secret webcam_username
     password: !secret webcam_password
@@ -303,16 +295,16 @@ twilio:
 
 switch:
   - platform: deluge
-    host: 192.168.1.123
-    port: 58846
+    host: !secret deluge_ip
+    port: !secret deluge_port
     username: !secret deluge_username
     password: !secret deluge_password
 
 shell_command:
-  foscam_preset1: 'curl -k "http://192.168.1.120:80/decoder_control.cgi?command=31&user={{ states.sensor.secrets.attributes.foscam_username }}&pwd={{ states.sensor.secrets.attributes.foscam_password }}"'
-  foscam_preset2: 'curl -k "http://192.168.1.120:80/decoder_control.cgi?command=33&user={{ states.sensor.secrets.attributes.foscam_username }}&pwd={{ states.sensor.secrets.attributes.foscam_password }}"'
-  foscam_preset3: 'curl -k "http://192.168.1.120:80/decoder_control.cgi?command=35&user={{ states.sensor.secrets.attributes.foscam_username }}&pwd={{ states.sensor.secrets.attributes.foscam_password }}"'
-  foscam_preset4: 'curl -k "http://192.168.1.120:80/decoder_control.cgi?command=37&user={{ states.sensor.secrets.attributes.foscam_username }}&pwd={{ states.sensor.secrets.attributes.foscam_password }}"'
+  foscam_preset1: !secret foscam_preset1
+  foscam_preset2: !secret foscam_preset2
+  foscam_preset3: !secret foscam_preset3
+  foscam_preset4: !secret foscam_preset4
 
 freedns:
     access_token: !secret freedns_token
