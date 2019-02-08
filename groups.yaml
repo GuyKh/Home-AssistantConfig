@@ -107,7 +107,11 @@ Deluge:
 Deluge Sensors:
   view: no
   entities:
-  - sensor.deluge_down_speed
-  - sensor.deluge_up_speed
-  - sensor.deluge_status
-  - switch.deluge_switch
+  - sensor.localDeluge_down_speed
+  - sensor.localDeluge_up_speed
+  - sensor.localDeluge_status
+  - switch.localDeluge_switch
+  - sensor.remoteDeluge_down_speed
+  - sensor.remoteDeluge_up_speed
+  - sensor.remoteDeluge_status
+  - switch.remoteDeluge_switch
