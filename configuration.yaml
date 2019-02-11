@@ -68,6 +68,11 @@ http:
 logger:
   default: info
 
+
+recorder:
+    # Keep history for 7 days
+    purge_keep_days: 7
+
 # Checks for available updates
 # Note: This component will send some information about your system to
 # the developers to assist with development of Home Assistant.
@@ -120,7 +125,7 @@ sensor:
         arg: wlan0
   - platform: filesize
     file_paths:
-      - home-assistant_v2.db
+      - !secret db_path
   - platform: time_date
     display_options:
       -  'time'
