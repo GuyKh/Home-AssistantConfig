@@ -13,6 +13,8 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   packages: !include_dir_named packages
+  whitelist_external_dirs:
+    - !secret ha_path
 
 
   customize_glob:
@@ -333,7 +335,7 @@ freedns:
     access_token: !secret freedns_token
 
 mqtt:
-  password: hello
+  password: !secret mqtt_secret
 
 automation: !include automations.yaml
 group: !include groups.yaml
