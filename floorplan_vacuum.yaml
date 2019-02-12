@@ -1,0 +1,34 @@
+      name: Vacuum Floorplan
+      #image: /local/custom_ui/floorplan/home_vacuum.svg
+      #stylesheet: /local/custom_ui/floorplan/home_vacuum.css
+      
+      # These options are optional
+      # warnings:            # enable warnings (to find out why things might not be working correctly)
+      # pan_zoom:            # enable experimental panning / zooming
+
+      groups:
+        - name: Vacuum Scripts
+          entities:
+             - script.vacuum_bedroom
+             - script.vacuum_study
+             - script.vacuum_entryway
+             - script.vacuum_living_room
+             - script.vacuum_kitchen
+             - script.vacuum_balcony
+          action:
+            domain: script
+            service: turn_on
+
+        - name: Vacuum Sensors
+          entities:
+             - sensor.xiaomi_vacuum_cleaner_status
+          text_template: '${entity.state ? entity.state : "unknown"}'
+          states:
+            - state: 'Charging'
+              class: 'info-text'
+            - state: 'Zoned cleaning'
+              class: 'success-text'
+            - state: 'Cleaning'
+              class: 'success-text'
+            - state: 'Returning home'
+              class: 'warning-text'

@@ -1,0 +1,117 @@
+default_view:
+  name: Home
+  view: yes
+  entities:
+    - group.people
+    - group.weather
+    - group.entryway
+    - group.living_room
+    - group.robot_vacuum
+    - group.vacuum_a_room
+
+
+
+System_Status:
+  name: 'System Status'
+  view: no
+  entities:
+   - sensor.date
+   - sensor.time
+   - sensor.ha_uptime
+   - sensor.last_boot
+   - sensor.hline_1
+   - sensor.ha_installed_version
+   - sensor.memory_free
+   - sensor.memory_use_percent
+   - sensor.swap_free
+   - sensor.swap_use_percent
+   - sensor.processor_use
+   - sensor.disk_free_home
+   - sensor.disk_use_percent
+   - sensor.load_5m
+   - sensor.hline_1
+   - sensor.network_in_enxb827ebcca772
+   - sensor.network_out_enxb827ebcca772
+   - sensor.network_in_wlan0
+   - sensor.network_out_wlan0
+
+system:
+  name: System
+  view: yes
+  entities:
+    - input_boolean.guy_home
+    - group.System_Status
+
+cameras:
+  name: cameras
+  view: yes
+  entities:
+    - camera.foscam_mjpeg
+    - camera.foscam_native
+    - camera.android_webcam_mjpeg
+    - input_boolean.foscam_preset_1
+    - input_boolean.foscam_preset_2
+    - input_boolean.foscam_preset_3
+    - input_boolean.foscam_preset_4
+
+all_devices:
+  name: All Devices
+  view: yes
+  entities:
+    - group.all_devices
+    - group.all_switches
+
+guy:
+  name: Guy
+  entities:
+    - device_tracker.samsung_s8
+    - device_tracker.samsung_s8_bt
+    - device_tracker.samsung_gear_s2
+    - device_tracker.samsung_gear_s2_bt
+
+entryway:
+  name: Entryway
+  entities:
+    - media_player.entryway_speaker
+    - switch.sonoff_10004bd3c1
+
+living_room:
+  name: Living Room
+  entities:
+    - media_player.cast
+    - media_player.kodi
+    - media_player.samsung_tv_remote
+    - media_player.living_room_tv
+    - camera.foscam_mjpeg
+    - camera.foscam_native
+    - camera.ip_webcam
+    - weather.dark_sky
+    - light.xiaomi_philips_smart_led_ball
+
+people:
+  name: People
+  entities:
+#    - groups.guy
+    - device_tracker.samsung_s8
+    - device_tracker.samsung_s8_bt
+    - device_tracker.samsung_gear_s2
+    - device_tracker.samsung_gear_s2_bt
+    - sensor.guy_presence
+    - sensor.meital_presence
+
+Deluge:
+  view: yes
+  entities:
+  - group.deluge_sensors
+
+Deluge Sensors:
+  view: no
+  entities:
+  - sensor.localDeluge_down_speed
+  - sensor.localDeluge_up_speed
+  - sensor.localDeluge_status
+  - switch.localDeluge_switch
+  - sensor.remoteDeluge_down_speed
+  - sensor.remoteDeluge_up_speed
+  - sensor.remoteDeluge_status
+  - switch.remoteDeluge_switch

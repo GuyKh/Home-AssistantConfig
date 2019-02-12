@@ -1,0 +1,5 @@
+'1533195810287':
+  alias: Preset4
+  sequence:
+  - data: {}
+    service: shell_command.foscam_preset4

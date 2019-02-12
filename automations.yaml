@@ -1,0 +1,158 @@
+- action:
+  - data:
+      entity_id: media_player.entryway_speaker
+      language: en
+      message: Starting Home Assistant on Raspberry Pi.
+    service: tts.google_say
+  alias: Home Assistant Starts
+  condition:
+  - after: 08:00:00
+    before: '22:00:00'
+    condition: time
+  id: '1517943917170'
+  trigger:
+  - event: start
+    platform: homeassistant
+- action:
+  - alias: ''
+    entity_id: input_boolean.guy_home
+    service: homeassistant.turn_on
+  alias: guy_home Sensor On
+  condition: []
+  id: '1519076828273'
+  trigger:
+  - entity_id: device_tracker.samsung_s8_bt
+    from: not_home
+    platform: state
+    to: home
+  - entity_id: device_tracker.samsung_s8
+    from: not_home
+    platform: state
+    to: home
+- action:
+  - alias: ''
+    entity_id: input_boolean.guy_home
+    service: homeassistant.turn_off
+  alias: guy_home Sensor Off
+  condition: []
+  id: '1519076828223'
+  trigger:
+  - entity_id: device_tracker.samsung_s8_bt
+    from: home
+    platform: state
+    to: not_home
+  - entity_id: device_tracker.samsung_s8
+    from: home
+    platform: state
+    to: not_home
+- action:
+  - data:
+      message: Wellcome Home, Guy
+      title: Home Assistant
+    service: notify.slack_notifier
+  - data:
+      message: Wellcome Home, Guy.
+      title: Home Assistant
+    service: notify.ha_tele
+  - data:
+      entity_id: media_player.entryway_speaker
+      language: en
+      message: Hi Guy, Welcome Home
+    service: tts.google_say
+  alias: Guy is Home notification
+  condition:
+  - after: '16:00:00'
+    before: '23:00:00'
+    condition: time
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_boolean.guy_home.last_changed)  >
+      60 }}'
+  id: '1519112178736'
+  trigger:
+  - entity_id: input_boolean.guy_home
+    from: 'off'
+    platform: state
+    to: 'on'
+- alias: foscam_preset_1
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_1
+  action:
+    service: shell_command.foscam_preset1
+  id: 9f2099c4b39745118efc5602a24c03c0
+- alias: foscam_preset_2
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_2
+  action:
+    service: shell_command.foscam_preset2
+  id: 4a461cd975174886a1a744d0b6c66196
+- alias: foscam_preset_3
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_3
+  action:
+    service: shell_command.foscam_preset3
+  id: d9160f749dce49c1be85f9a9371da63f
+- alias: foscam_preset_4
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_4
+  action:
+    service: shell_command.foscam_preset4
+  id: 5e4ec1dd013a4f4a9cf82c9fafc30db4
+- id: e831f82d7c9c41b6b6497a5f3b2a239c
+  alias: Guy is Home so move camera
+  trigger:
+  - entity_id: input_boolean.guy_home
+    platform: state
+    to: 'on'
+  action:
+  - service: shell_command.foscam_preset4
+  - data: {}
+    service: light.turn_off
+- alias: Guy is Home so say hi
+  trigger:
+    platform: state
+    entity_id: input_boolean.guy_home
+    to: 'on'
+  action:
+  - data:
+      entity_id: media_player.entryway_speaker
+      language: en
+      message: Hi Guy, Welcome Home
+    service: tts.google_say
+  condition:
+  - condition: time
+    after: '16:00:00'
+    before: '23:00:00'
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_boolean.guy_home.last_changed) > 60 }}'
+  id: a62888cfca0541ee9976c81ce609f417
+- id: '1532549107910'
+  alias: Anyone Home - Move Camera
+  trigger:
+  - entity_id: sensor.occupancy_status
+    from: away
+    platform: state
+    to: home
+  condition: []
+  action:
+  - service: shell_command.foscam_preset4
+#- id: '1543592604855'
+#  alias: On Sunset - Turn on the Lamp
+#  trigger:
+#  - event: sunset
+#    platform: sun
+#  condition:
+#  - condition: time
+#    weekday:
+#      - sun
+#      - mon
+#      - tue
+#      - wed
+#      - thu
+#  action:
+#  - service: light.turn_on
+#  - serivce: homeassistant.turn_on
+#    entity_id: switch.sonoff_10004bd3c1

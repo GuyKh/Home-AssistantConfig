@@ -1,0 +1,335 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret longitude
+  longitude: !secret latitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jerusalem
+  # Customization file
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+
+
+  customize_glob:
+    'sensor.device_status_*':
+       custom_ui_state_card: state-card-custom-ui
+       templates:
+         theme: "if (state == 'online') return 'info_green'; else return 'alert_red';"
+    'sensor.http_status_*':
+       custom_ui_state_card: state-card-custom-ui
+       templates:
+         theme: "if (state == 'up') return 'info_green'; else return 'alert_red';"
+    'sensor.hline_*':
+       custom_ui_state_card: state-card-hline
+       config:
+         width: 90 
+         height: 0 
+         backgroundcolor: white
+         bordertop: '1px solid black'
+    'sensor.*disk*':
+       icon: mdi:harddisk
+    'sensor.*cpu_system*':
+       entity_picture: /local/icons/cpu.png
+    'sensor.*ram*':
+       entity_picture: /local/icons/ram.png
+    'sensor.deluge*speed*':
+       icon: mdi:speedometer
+    'sensor*table*':
+       icon: mdi:database-search
+
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+  themes: !include_dir_merge_named themes
+  extra_html_url:
+    - /local/custom_ui/custom-weather-card.html
+  extra_html_url_es5:
+    - /local/custom_ui/custom-weather-card.html
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+    api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+    base_url: !secret duckdns_url
+    ssl_certificate: !secret ssl_certificate
+    ssl_key: !secret ssl_key
+
+logger:
+  default: info
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+
+# Discover some devices automatically
+#discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_free
+        arg: /home
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+      - type: memory_use_percent
+      - type: swap_use_percent
+      - type: swap_free
+      - type: load_5m
+      - type: processor_use
+      - type: last_boot
+      - type: network_in
+        arg: enxb827ebcca772
+      - type: network_out
+        arg: enxb827ebcca772
+      - type: network_in
+        arg: wlan0
+      - type: network_out
+        arg: wlan0
+  - platform: filesize
+    file_paths:
+      - home-assistant_v2.db
+  - platform: time_date
+    display_options:
+      -  'time'
+      -  'date'
+  - platform: version
+    name: HA Installed Version
+    scan_interval: 86400
+  - platform: deluge
+    name: localDeluge
+    host: !secret deluge_ip
+    port: !secret deluge_port
+    username: !secret deluge_username
+    password: !secret deluge_password
+    monitored_variables:
+      - 'current_status'
+      - 'download_speed'
+      - 'upload_speed'
+  - platform: deluge
+    name: remoteDeluge
+    host: !secret deluge_remote_ip
+    port: !secret deluge_remote_port
+    username: !secret deluge_remote_username
+    password: !secret deluge_remote_password
+    monitored_variables:
+      - 'current_status'
+      - 'download_speed'
+      - 'upload_speed'
+  - platform: template
+    sensors:
+      guy_presence:
+        friendly_name: 'Guy Presence'
+        value_template: '{% if is_state("device_tracker.samsung_s8", "home") or is_state("device_tracker.samsung_s8_bt"  or is_state("device_tracker.samsung_gear_s2", "home" )  or is_state("device_tracker.samsung_gear_s2_bt", "home" ), "home" ) %}home{% else %}away{% endif %}'
+        entity_picture_template: /local/guy.jpg
+      meital_presence:
+        friendly_name: 'Meital Presence'
+        value_template: '{% if is_state(" device_tracker.meital_galaxy_s9", "home") or is_state("device_tracker.meital_s9", "home" ) %}home{% else %}away{% endif %}'
+        entity_picture_template: /local/metial.jpg
+      occupancy_status:
+        friendly_name: 'Master Presence'
+        value_template: '{% if is_state("sensor.guy_presence", "home") or is_state("sensor.meital_presence", "home" ) %}home{% else %}away{% endif %}'
+
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+#vacuum:
+#  - platform: xiaomi_miio
+#    host: 192.168.1.109
+#    token: !secret vacuum_key
+#    name: Xiaomi Vacuum
+
+binary_sensor:
+  - platform: template
+    sensors:
+      cpu_overload:
+        value_template: "{{ states('sensor.cpu_use')|int > 25 }}"
+        friendly_name: 'cpu above 25 %'
+
+light:
+  - platform: xiaomi_miio
+    name: Xiaomi Philips Smart LED Ball
+    host: !secret miio_hue_ip
+    token: !secret xiaomi_hue_token
+    model: philips.light.bulb
+#  - platform: yeelight
+#    devices:
+#      !secret yeelight_ip
+#        name: Living Room
+#        transition: 1000
+#        use_music_mode: True #(defaults to False)
+#        save_on_change: False #(defaults to True)
+
+
+media_player:
+  - platform: kodi
+    host: !secret kodi_ip
+  - platform: cast
+    host: !secret cast_one_ip
+  - platform: cast
+    host: !secret google_home_one_ip
+  - platform: samsungtv
+    host: !secret samsung_ip
+    port: 8001
+    mac: !secret samsung_mac
+    timeout: 3
+
+ifttt:
+  key: !secret ifttt_key
+
+device_tracker:
+  - platform: bluetooth_tracker
+  - platform: snmp
+    host: !secret router_ip
+    community: public
+    baseoid: 1.3.6.1.2.1.3.1.1.2
+    track_new_devices: no
+    consider_home: 30
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_key
+    allowed_chat_ids:
+     - !secret telegram_chat_id
+
+notify:
+  - name: HA_Tele
+    platform: telegram
+    chat_id: !secret telegram_chat_id
+  - name: slack_notifier
+    platform: slack
+    api_key: !secret slack_key
+    default_channel: '#general'
+  - platform: html5
+    name: push_notifier
+    gcm_api_key: !secret google_server_key
+    gcm_sender_id: !secret google_sender_key
+  - name: twilio_whatsapp
+    platform: twilio_whatsapp
+    from_number: !secret twilio_number
+
+google_assistant:
+  project_id: homeassistant-8d58d
+  api_key: !secret google_api_key
+  exposed_domains:
+    - SWITCH
+    - LIGHT
+    - GROUP
+
+input_boolean:
+  guy_home:
+    name: Guy is Home Sensor
+    initial: on
+    icon: mdi:cellphone-settings
+  foscam_preset_1:
+    name: Foscam Preset 1
+    initial: on
+  foscam_preset_2:
+    name: Foscam Preset 2
+    initial: on
+  foscam_preset_3:
+    name: Foscam Preset 3
+    initial: on
+  foscam_preset_4:
+    name: Foscam Preset 4
+    initial: on
+
+weather:
+  - platform: darksky
+    api_key: !secret darksky_token
+    mode: daily
+
+camera:
+  - platform: foscam
+    ip: !secret foscam_ip
+    username: !secret foscam_username
+    password: !secret foscam_password
+    port: !secret foscam_port
+    name: Foscam Native
+  - platform: mjpeg
+    mjpeg_url: !secret foscam_url
+    name: Foscam MJPEG
+  - platform: mjpeg
+    mjpeg_url: !secret mjpeg_url
+    name: Android Webcam MJPEG
+    username: !secret webcam_username
+    password: !secret webcam_password
+
+sonoff:
+  username: !secret sonoff_username
+  password: !secret sonoff_password
+  scan_interval: 60
+  grace_period: 600
+  api_region: 'eu'
+
+twilio:
+  account_sid: !secret twilio_account_sid
+  auth_token: !secret twilio_auth_token
+
+
+switch:
+  - platform: deluge
+    name: localDeluge
+    host: !secret deluge_ip
+    port: !secret deluge_port
+    username: !secret deluge_username
+    password: !secret deluge_password
+  - platform: deluge
+    name: remoteDeluge
+    host: !secret deluge_remote_ip
+    port: !secret deluge_remote_port
+    username: !secret deluge_remote_username
+    password: !secret deluge_remote_password
+
+shell_command:
+  foscam_preset1: !secret foscam_preset1
+  foscam_preset2: !secret foscam_preset2
+  foscam_preset3: !secret foscam_preset3
+  foscam_preset4: !secret foscam_preset4
+
+freedns:
+    access_token: !secret freedns_token
+
+mqtt:
+  password: hello
+
+automation: !include automations.yaml
+group: !include groups.yaml
+script: !include scripts.yaml
