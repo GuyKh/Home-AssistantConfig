@@ -1,216 +1,205 @@
-title: My Lovely Home Automation
+title: Home
 views:
   - title: Home
     cards:
-      - type: picture-entity
-        title: Android Webcam MJPEG
-        entity: camera.android_webcam_mjpeg
-        camera_image: camera.android_webcam_mjpeg
-        show_info: true
-        tap_action: dialog
-
-      - type: picture-entity
-        title: Foscam MJPEG
-        entity: camera.foscam_mjpeg
-        camera_image: camera.foscam_mjpeg
-        show_info: true
-        tap_action: dialog
-
-      - type: picture-entity
-        title: Foscam Native
-        entity: camera.foscam_native
-        camera_image: camera.foscam_native
-        show_info: true
-        tap_action: dialog
-
-      - type: media-control
-        entity: media_player.entryway_speaker
-
-      - type: media-control
-        entity: media_player.group
-
-      - type: media-control
-        entity: media_player.kodi
-
-      - type: media-control
-        entity: media_player.samsung_tv_remote
-
-      - type: entities
-        title: Automations
+      - title: People
         show_header_toggle: true
         entities:
-          - automation.anyone_home__move_camera
-          - automation.foscam_preset_1
-          - automation.foscam_preset_2
-          - automation.foscam_preset_3
-          - automation.foscam_preset_4
-          - automation.guy_home_sensor_off
-          - automation.guy_home_sensor_on
-          - automation.guy_is_home_not_working
-          - automation.guy_is_home_notification
-          - automation.guy_is_home_so_move_camera
-          - automation.guy_is_home_so_say_hi
-          - automation.home_assistant_starts
-          - automation.start_cleaning_room
-
-      - type: entities
-        title: Binary Sensor
-        show_header_toggle: true
-        entities:
-          - binary_sensor.cpu_overload
-
-      - type: entity-filter
-        title: Device Trackers
-        show_header_toggle: true
-        entities:
-          - device_tracker.000000020201
-          - device_tracker.04d6aaa0ae97
-          - device_tracker.24181d041d91
-          - device_tracker.2c598a587acb
-          - device_tracker.7802f8ffcdfe
-          - device_tracker.7811dc6a8dd9
-          - device_tracker.84a466ff2bde
-          - device_tracker.acd1b8e5bf3f
-          - device_tracker.b827eb99f227
-          - device_tracker.b827ebcca772
-          - device_tracker.c0eefb24470b
-          - device_tracker.c485082bc3ca
-          - device_tracker.e8abfa00230c
-          - device_tracker.f04f7cff99c9
-          - device_tracker.fcc2deac7977
-          - device_tracker.guy_mac
-          - device_tracker.guyplus_one
-          - device_tracker.hk_nova
-          - device_tracker.ipad__gabrielle
-          - device_tracker.meital_galaxy_s9
-          - device_tracker.meital_s9
-          - device_tracker.qcombtd
-          - device_tracker.redmi
-          - device_tracker.redmi_2
-          - device_tracker.samsung_gear_s2
-          - device_tracker.samsung_gear_s2_bt
           - device_tracker.samsung_s8
           - device_tracker.samsung_s8_bt
-          - device_tracker.victurio
-          - device_tracker.yonis_phone
-        state_filter:
-          - 'home'
-        card:
-          type: glance
-          title: My Device Trackers
-
-
-      - type: entities
-        title: Groups
+          - device_tracker.samsung_gear_s2
+          - device_tracker.samsung_gear_s2_bt
+          - sensor.guy_presence
+          - sensor.meital_presence
+        type: entities
+      - title: Entryway
         show_header_toggle: true
         entities:
-          - group.all_automations
-          - group.all_devices
-          - group.all_lights
-          - group.all_scripts
-          - group.all_switches
-          - group.all_vacuum_cleaners
-          - group.cameras
-          - group.default_view
-          - group.deluge
-          - group.deluge_sensors
-          - group.entryway
-          - group.guy
-          - group.living_room
-          - group.people
-          - group.robot_vacuum
-          - group.system
-          - group.system_status
-          - group.vacuum_a_room
-
-      - type: entities
-        title: Input Booleans
+          - switch.sonoff_10004bd3c1
+        type: entities
+      - entity: media_player.entryway_speaker
+        type: media-control
+      - title: Living Room
         show_header_toggle: true
+        entities:
+          - light.xiaomi_philips_smart_led_ball
+        type: entities
+      - entity: media_player.cast
+        type: media-control
+      - entity: media_player.kodi
+        type: media-control
+      - entity: media_player.samsung_tv_remote
+        type: media-control
+      - entity: media_player.living_room_tv
+        type: media-control
+      - entity: camera.foscam_mjpeg
+        type: picture-entity
+      - entity: camera.foscam_native
+        type: picture-entity
+      - entity: camera.ip_webcam
+        type: picture-entity
+      - entity: weather.dark_sky
+        type: weather-forecast
+      - title: Robot Vacuum
+        show_header_toggle: false
+        entities:
+          - vacuum.xiaomi_vacuum_cleaner
+        type: entities
+      - title: Vacuum a Room
+        show_header_toggle: false
+        entities:
+          - input_select.vacuum_room
+          - binary_sensor.vacuum_room
+        type: entities
+      - entity: light.xiaomi_philips_smart_led_ball
+        name: Xiaomi Philips Smart Led
+        theme: Backend-selected
+        type: light
+    path: default_view
+    badges: []
+  - title: System
+    cards:
+      - title: System Status
+        show_header_toggle: true
+        entities:
+          - entity: sensor.date
+          - entity: sensor.time
+          - entity: sensor.last_boot
+          - entity: sensor.ha_installed_version
+          - entity: updater.updater
+          - entity: sensor.memory_free
+          - entity: sensor.memory_use_percent
+          - entity: sensor.swap_free
+          - entity: sensor.swap_use_percent
+          - entity: sensor.processor_use
+          - entity: sensor.load_5m
+          - entity: sensor.disk_free_home
+          - entity: sensor.network_in_enxb827ebcca772
+          - entity: sensor.network_out_enxb827ebcca772
+          - entity: sensor.network_in_wlan0
+          - entity: sensor.network_out_wlan0
+          - entity: sensor.disk_use_percent_home
+          - entity: sensor.home_assistant_v2_db
+        type: entities
+      - title: Input boolean
+        entities:
+          - input_boolean.guy_home
+        type: entities
+      - title: History
+        entities:
+          - sensor.swap_use_percent
+          - sensor.memory_use_percent
+          - sensor.disk_use_percent_home
+          - sensor.processor_use
+          - sensor.load_5m
+          - sensor.home_assistant_v2_db
+        type: history-graph
+    path: system
+    badges: []
+  - title: cameras
+    cards:
+      - entity: camera.foscam_mjpeg
+        type: picture-entity
+      - entity: camera.foscam_native
+        type: picture-entity
+      - entity: camera.android_webcam_mjpeg
+        type: picture-entity
+      - title: Input boolean
         entities:
           - input_boolean.foscam_preset_1
           - input_boolean.foscam_preset_2
           - input_boolean.foscam_preset_3
           - input_boolean.foscam_preset_4
-          - input_boolean.guy_home
-
-      - type: entities
-        title: Input Select
+        type: entities
+    path: cameras
+    badges: []
+  - title: all devices
+    cards: []
+    path: all_devices
+    badges:
+      - device_tracker.qcombtd
+      - device_tracker.04d6aaa0ae97
+      - device_tracker.34ce00c6f5fc
+      - device_tracker.7811dc6a8dd9
+      - device_tracker.b827ebcca772
+      - device_tracker.galaxy_s8
+      - device_tracker.meital_s9
+      - device_tracker.f4f5dbd0d909
+      - device_tracker.redmi_2
+      - device_tracker.30fd380497d1
+      - device_tracker.redmi
+      - device_tracker.hk_nova
+      - device_tracker.acd1b8e5bf3f
+      - device_tracker.ipad_gabrielle
+      - device_tracker.64a2f95150ee
+      - device_tracker.fcc2deac7977
+      - device_tracker.9c5cf9588783
+      - device_tracker.victurio
+      - device_tracker.840d8e489a2a
+      - device_tracker.000000020201
+      - device_tracker.guy_mac
+      - device_tracker.04b167103f40
+      - device_tracker.guyplus_one
+      - device_tracker.2400bacdd0dd
+      - device_tracker.3cbd3e1a3f9d
+      - device_tracker.f04f7cff99c9
+      - device_tracker.685acfad03a2
+      - device_tracker.b827eb99f227
+      - device_tracker.24181d2414cd
+      - device_tracker.7811dc9eb23c
+      - device_tracker.samsung_gear_s2
+      - device_tracker.yonis_phone
+      - device_tracker.2c598a587acb
+      - device_tracker.samsung_s8_bt
+      - device_tracker.samsung_gear_s2_bt
+      - device_tracker.7802f8ffcdfe
+      - device_tracker.c485082bc3ca
+      - device_tracker.e8abfa00230c
+      - device_tracker.samsung_s8
+      - device_tracker.c0eefb24470b
+      - device_tracker.24181d041d91
+      - device_tracker.meital_galaxy_s9
+      - device_tracker.84a466ff2bde
+  - title: Deluge
+    cards:
+      - title: Deluge Sensors
         show_header_toggle: true
         entities:
-          - input_select.vacuum_room
-
-      - type: entities
-        title: Light
-        show_header_toggle: true
+          - entity: sensor.localdeluge_down_speed
+          - entity: sensor.localdeluge_up_speed
+          - entity: sensor.localdeluge_status
+          - entity: switch.localdeluge
+          - entity: sensor.remotedeluge_down_speed
+          - entity: sensor.remotedeluge_up_speed
+          - entity: sensor.remotedeluge_status
+          - entity: switch.remotedeluge
+        type: entities
+    path: deluge
+    badges: []
+  - title: Media
+    cards:
+      - entity: media_player.living_room_tv
+        type: media-control
+      - entity: media_player.googlehome3672
+        type: media-control
+      - entity: media_player.kodi
+        type: media-control
+      - entity: media_player.samsung_tv_remote
+        type: media-control
+      - entity: media_player.entryway_speaker
+        type: media-control
+      - entity: media_player.home_group
+        type: media-control
+    badges: []
+  - title: PiHole
+    badges: []
+    cards:
+      - title: PiHole Entities
+        type: entities
         entities:
-          - light.living_room
-
-      - type: entities
-        title: Scripts
-        show_header_toggle: true
-        entities:
-          - script.1533195810287
-          - script.vacuum_all_except_bedroom_and_ensuite
-          - script.vacuum_balcony
-          - script.vacuum_bedroom
-          - script.vacuum_entryway
-          - script.vacuum_kitchen
-          - script.vacuum_living_room
-          - script.vacuum_mopping_surfaces
-          - script.vacuum_study
-
-      - type: entities
-        title: Sensors
-        show_header_toggle: true
-        entities:
-          - sensor.date
-          - sensor.deluge_down_speed
-          - sensor.deluge_status
-          - sensor.deluge_up_speed
-          - sensor.disk_free_home
-          - sensor.guy_presence
-          - sensor.ha_installed_version
-          - sensor.hline_1
-          - sensor.hline_2
-          - sensor.hline_3
-          - sensor.hline_4
-          - sensor.last_boot
-          - sensor.meital_presence
-          - sensor.memory_free
-          - sensor.network_in_eth0
-          - sensor.network_out_eth0
-          - sensor.occupancy_status
-          - sensor.processor_use
-          - sensor.secrets
-          - sensor.since_last_boot
-          - sensor.time
-          - sensor.xiaomi_vacuum_cleaner_status
-
-      - type: entities
-        title: Sun
-        show_header_toggle: true
-        entities:
-          - sun.sun
-
-      - type: entities
-        title: Switch
-        show_header_toggle: true
-        entities:
-          - switch.deluge_switch
-
-      - type: entities
-        title: Vacuum
-        show_header_toggle: true
-        entities:
-          - vacuum.xiaomi_vacuum_cleaner
-
-      - type: weather-forecast
-        title: Weather2
-        show_header_toggle: true
-        entity: weather.dark_sky
-
-      - type: entities
-        title: Zone
-        show_header_toggle: true
-        entities:
-          - zone.home
+          - entity: sensor.pi_hole_ads_percentage_blocked_today
+          - entity: sensor.pi_hole_ads_blocked_today
+          - entity: sensor.pi_hole_domains_blocked
+          - entity: sensor.pi_hole_dns_queries_today
+          - entity: sensor.pi_hole_dns_unique_clients
+    icon: ''
