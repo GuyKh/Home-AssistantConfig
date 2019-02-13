@@ -13,6 +13,8 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   packages: !include_dir_named packages
+  whitelist_external_dirs:
+    - !secret ha_path
 
 
   customize_glob:
@@ -68,6 +70,11 @@ http:
 logger:
   default: info
 
+
+recorder:
+    # Keep history for 7 days
+    purge_keep_days: 7
+
 # Checks for available updates
 # Note: This component will send some information about your system to
 # the developers to assist with development of Home Assistant.
@@ -120,7 +127,7 @@ sensor:
         arg: wlan0
   - platform: filesize
     file_paths:
-      - home-assistant_v2.db
+      - !secret db_path
   - platform: time_date
     display_options:
       -  'time'
@@ -161,6 +168,11 @@ sensor:
       occupancy_status:
         friendly_name: 'Master Presence'
         value_template: '{% if is_state("sensor.guy_presence", "home") or is_state("sensor.meital_presence", "home" ) %}home{% else %}away{% endif %}'
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'    
 
 
 # Text to speech
@@ -328,7 +340,7 @@ freedns:
     access_token: !secret freedns_token
 
 mqtt:
-  password: hello
+  password: !secret mqtt_secret
 
 automation: !include automations.yaml
 group: !include groups.yaml
