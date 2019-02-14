@@ -13,6 +13,8 @@ __pycache__/
 # You can whitelist files/folders with !, these will not be ignored.
 !*.yaml
 !.gitignore
+!*.js
+!*.svg
 !*.md
 !*.sh
 !*.js
@@ -33,7 +35,6 @@ __pycache__/
 !www/
 !www/*
 !www/**/*
-
 
 # Ignore folders.
 .storage
