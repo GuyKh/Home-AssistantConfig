@@ -127,7 +127,8 @@
     after: '16:00:00'
     before: '23:00:00'
   - condition: template
-    value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_boolean.guy_home.last_changed) > 60 }}'
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_boolean.guy_home.last_changed)
+      > 60 }}'
   id: a62888cfca0541ee9976c81ce609f417
 - id: '1532549107910'
   alias: Anyone Home - Move Camera
@@ -139,20 +140,16 @@
   condition: []
   action:
   - service: shell_command.foscam_preset4
-#- id: '1543592604855'
-#  alias: On Sunset - Turn on the Lamp
-#  trigger:
-#  - event: sunset
-#    platform: sun
-#  condition:
-#  - condition: time
-#    weekday:
-#      - sun
-#      - mon
-#      - tue
-#      - wed
-#      - thu
-#  action:
-#  - service: light.turn_on
-#  - serivce: homeassistant.turn_on
-#    entity_id: switch.sonoff_10004bd3c1
+- id: '1550137864073'
+  alias: Turn on the light on sunset
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - data:
+      entity_id: light.xiaomi_philips_smart_led_ball
+    service: light.turn_on
+  - data:
+      entity_id: switch.sonoff_10004bd3c1
+    service: switch.turn_on
