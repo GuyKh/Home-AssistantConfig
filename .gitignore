@@ -3,10 +3,16 @@
 *
 __pycache__/
 *.py[cod]
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
 
 # You can whitelist files/folders with !, these will not be ignored.
 !*.yaml
 !.gitignore
+!*.js
+!*.svg
 !*.md
 !*.sh
 !bin
@@ -22,7 +28,9 @@ __pycache__/
 !packages/*
 !themes/
 !themes/*
-
+!www/
+!www/*
+!www/**/*
 
 # Ignore folders.
 .storage
