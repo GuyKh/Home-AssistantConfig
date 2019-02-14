@@ -2,13 +2,21 @@
 # A * ensures that everything will be ignored.
 *
 __pycache__/
+**/__pycache__
+**/.___pycache__
 *.py[cod]
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
 
 # You can whitelist files/folders with !, these will not be ignored.
 !*.yaml
 !.gitignore
 !*.md
 !*.sh
+!*.js
+!*.svg
 !bin
 !custom_components/
 !custom_components/*
@@ -22,6 +30,9 @@ __pycache__/
 !packages/*
 !themes/
 !themes/*
+!www/
+!www/*
+!www/**/*
 
 
 # Ignore folders.
