@@ -55,6 +55,7 @@ frontend:
     - /local/custom_ui/custom-weather-card.html
   extra_html_url_es5:
     - /local/custom_ui/custom-weather-card.html
+  javascript_version: latest
 
 # Enables configuration UI
 config:
@@ -164,7 +165,7 @@ sensor:
       meital_presence:
         friendly_name: 'Meital Presence'
         value_template: '{% if is_state(" device_tracker.meital_galaxy_s9", "home") or is_state("device_tracker.meital_s9", "home" ) %}home{% else %}away{% endif %}'
-        entity_picture_template: /local/metial.jpg
+        entity_picture_template: /local/meital.jpg
       occupancy_status:
         friendly_name: 'Master Presence'
         value_template: '{% if is_state("sensor.guy_presence", "home") or is_state("sensor.meital_presence", "home" ) %}home{% else %}away{% endif %}'

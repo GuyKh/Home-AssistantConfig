@@ -145,7 +145,14 @@
   trigger:
   - event: sunset
     platform: sun
-  condition: []
+  condition:
+    condition: time
+    weekday:
+      - sun
+      - mon
+      - tue
+      - wed
+      - thu
   action:
   - data:
       entity_id: light.xiaomi_philips_smart_led_ball
