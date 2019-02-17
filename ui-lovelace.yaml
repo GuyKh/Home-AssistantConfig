@@ -1,17 +1,9 @@
-title: Home
-resources:
-  - url: /local/mini-graph-card-bundle.js?v=0.2.4
-    type: module
-  - url: /local/custom-lovelace/weather-card/weather-card.js
-    type: module
-  - url: /local/mini-media-player-bundle.js?v=1.0.1
-    type: module
-
 views:
   - title: Home
     cards:
-      - title: People
-        show_header_toggle: true
+      - show_header_toggle: true
+        type: entities
+        title: People
         entities:
           - device_tracker.samsung_s8
           - device_tracker.samsung_s8_bt
@@ -19,56 +11,52 @@ views:
           - device_tracker.samsung_gear_s2_bt
           - sensor.guy_presence
           - sensor.meital_presence
+      - show_header_toggle: true
         type: entities
-      - title: Entryway
-        show_header_toggle: true
+        title: Entryway
         entities:
           - switch.sonoff_10004bd3c1
+      - type: media-control
+        entity: media_player.entryway_speaker
+      - show_header_toggle: true
         type: entities
-      - entity: media_player.entryway_speaker
-        type: media-control
-      - title: Living Room
-        show_header_toggle: true
+        title: Living Room
         entities:
           - light.xiaomi_philips_smart_led_ball
+      - type: media-control
+        entity: media_player.kodi
+      - type: media-control
+        entity: media_player.samsung_tv_remote
+      - type: media-control
+        entity: media_player.living_room_tv
+      - type: picture-entity
+        entity: camera.foscam_mjpeg
+      - type: picture-entity
+        entity: camera.foscam_native
+      - type: 'custom:weather-card'
+        entity: weather.dark_sky
+      - show_header_toggle: false
         type: entities
-      - entity: media_player.cast
-        type: media-control
-      - entity: media_player.kodi
-        type: media-control
-      - entity: media_player.samsung_tv_remote
-        type: media-control
-      - entity: media_player.living_room_tv
-        type: media-control
-      - entity: camera.foscam_mjpeg
-        type: picture-entity
-      - entity: camera.foscam_native
-        type: picture-entity
-      - entity: camera.ip_webcam
-        type: picture-entity
-      - entity: weather.dark_sky
-        type: weather-forecast
-      - title: Robot Vacuum
-        show_header_toggle: false
+        title: Robot Vacuum
         entities:
           - vacuum.xiaomi_vacuum_cleaner
+      - show_header_toggle: false
         type: entities
-      - title: Vacuum a Room
-        show_header_toggle: false
+        title: Vacuum a Room
         entities:
           - input_select.vacuum_room
           - binary_sensor.vacuum_room
-        type: entities
       - entity: light.xiaomi_philips_smart_led_ball
-        name: Xiaomi Philips Smart Led
-        theme: Backend-selected
         type: light
-    path: default_view
+        theme: Backend-selected
+        name: Xiaomi Philips Smart Led
     badges: []
+    path: default_view
   - title: System
     cards:
-      - title: System Status
-        show_header_toggle: true
+      - show_header_toggle: true
+        type: entities
+        title: System Status
         entities:
           - entity: sensor.date
           - entity: sensor.time
@@ -79,6 +67,7 @@ views:
           - entity: sensor.memory_use_percent
           - entity: sensor.swap_free
           - entity: sensor.swap_use_percent
+          - entity: sensor.cpu_temperature
           - entity: sensor.processor_use
           - entity: sensor.load_5m
           - entity: sensor.disk_free_home
@@ -88,42 +77,45 @@ views:
           - entity: sensor.network_out_wlan0
           - entity: sensor.disk_use_percent_home
           - entity: sensor.home_assistant_v2_db
-        type: entities
-      - title: Input boolean
+      - type: 'custom:mini-graph-card'
+        name: 'CPU Temp, Disk and Memory Use'
         entities:
-          - input_boolean.guy_home
-        type: entities
-      - title: History
-        entities:
-          - sensor.swap_use_percent
           - sensor.memory_use_percent
           - sensor.disk_use_percent_home
+          - sensor.cpu_temperature
+      - type: 'custom:mini-graph-card'
+        name: Processor and Swap use
+        entities:
           - sensor.processor_use
+          - sensor.swap_use_percent
+      - type: 'custom:mini-graph-card'
+        entities:
           - sensor.load_5m
+      - type: 'custom:mini-graph-card'
+        name: DB Size
+        entities:
           - sensor.home_assistant_v2_db
-        type: history-graph
-    path: system
     badges: []
+    path: system
   - title: cameras
     cards:
-      - entity: camera.foscam_mjpeg
-        type: picture-entity
-      - entity: camera.foscam_native
-        type: picture-entity
-      - entity: camera.android_webcam_mjpeg
-        type: picture-entity
-      - title: Input boolean
+      - type: picture-entity
+        entity: camera.foscam_mjpeg
+      - type: picture-entity
+        entity: camera.foscam_native
+      - type: picture-entity
+        entity: camera.android_webcam_mjpeg
+      - type: entities
+        title: Input boolean
         entities:
           - input_boolean.foscam_preset_1
           - input_boolean.foscam_preset_2
           - input_boolean.foscam_preset_3
           - input_boolean.foscam_preset_4
-        type: entities
-    path: cameras
     badges: []
+    path: cameras
   - title: all devices
     cards: []
-    path: all_devices
     badges:
       - device_tracker.qcombtd
       - device_tracker.04d6aaa0ae97
@@ -168,10 +160,12 @@ views:
       - device_tracker.24181d041d91
       - device_tracker.meital_galaxy_s9
       - device_tracker.84a466ff2bde
+    path: all_devices
   - title: Deluge
     cards:
-      - title: Deluge Sensors
-        show_header_toggle: true
+      - show_header_toggle: true
+        type: entities
+        title: Deluge Sensors
         entities:
           - entity: sensor.localdeluge_down_speed
           - entity: sensor.localdeluge_up_speed
@@ -181,33 +175,43 @@ views:
           - entity: sensor.remotedeluge_up_speed
           - entity: sensor.remotedeluge_status
           - entity: switch.remotedeluge
-        type: entities
-    path: deluge
     badges: []
+    path: deluge
   - title: Media
     cards:
-      - entity: media_player.living_room_tv
-        type: media-control
-      - entity: media_player.googlehome3672
-        type: media-control
-      - entity: media_player.kodi
-        type: media-control
-      - entity: media_player.samsung_tv_remote
-        type: media-control
-      - entity: media_player.entryway_speaker
-        type: media-control
-      - entity: media_player.home_group
-        type: media-control
+      - type: 'custom:mini-media-player'
+        entity: media_player.living_room_tv
+      - type: 'custom:mini-media-player'
+        entity: media_player.kodi
+      - type: 'custom:mini-media-player'
+        entity: media_player.googlehome3672
+      - type: 'custom:mini-media-player'
+        entity: media_player.samsung_tv_remote
+      - type: 'custom:mini-media-player'
+        entity: media_player.entryway_speaker
+      - type: 'custom:mini-media-player'
+        entity: media_player.home_group
+      - entity: media_player.spotify
+        type: 'custom:mini-media-player'
     badges: []
   - title: PiHole
-    badges: []
     cards:
-      - title: PiHole Entities
-        type: entities
+      - type: entities
+        title: PiHole Entities
         entities:
           - entity: sensor.pi_hole_ads_percentage_blocked_today
           - entity: sensor.pi_hole_ads_blocked_today
           - entity: sensor.pi_hole_domains_blocked
           - entity: sensor.pi_hole_dns_queries_today
           - entity: sensor.pi_hole_dns_unique_clients
+    badges: []
     icon: ''
+title: Home
+resources:
+  - type: module
+    url: /local/mini-graph-card-bundle.js?v=0.2.4
+  - type: module
+    url: https://cdn.jsdelivr.net/gh/bramkragten/custom-ui@master/weather-card/weather-card.min.js
+  - type: module
+    url: /local/mini-media-player-bundle.js?v=1.0.1
+
