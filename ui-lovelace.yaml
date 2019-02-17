@@ -191,6 +191,8 @@ views:
         entity: media_player.entryway_speaker
       - type: 'custom:mini-media-player'
         entity: media_player.home_group
+      - entity: media_player.spotify
+        type: 'custom:mini-media-player'
     badges: []
   - title: PiHole
     cards:
@@ -212,3 +214,4 @@ resources:
     url: https://cdn.jsdelivr.net/gh/bramkragten/custom-ui@master/weather-card/weather-card.min.js
   - type: module
     url: /local/mini-media-player-bundle.js?v=1.0.1
+
