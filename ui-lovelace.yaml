@@ -198,6 +198,8 @@ views:
         type: media-control
       - entity: media_player.home_group
         type: media-control
+      - entity: media_player.spotify
+        type: media-control
     badges: []
   - title: PiHole
     badges: []
