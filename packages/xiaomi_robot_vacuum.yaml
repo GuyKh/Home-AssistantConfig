@@ -116,8 +116,9 @@ script:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               command: app_zoned_clean
               params: [[29422,20624,33272,23674,1]]
+              
 sensor:
-- platform: template
+  - platform: template
     sensors:
       xiaomi_vacuum_cleaner_status: 
         entity_id:
