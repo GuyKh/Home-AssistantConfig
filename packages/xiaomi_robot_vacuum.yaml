@@ -15,14 +15,14 @@ homeassistant:
       custom_ui_state_card: state-card-floorplan
       config: !include ../floorplan_vacuum.yaml
 
- binary_sensor:
-   - platform: mqtt
-     state_topic: dummy/floorplan/sensor
-     name: Vacuum Room
+binary_sensor:
+  - platform: mqtt
+    state_topic: dummy/floorplan/sensor
+    name: Vacuum Room
 
- frontend:
-   extra_html_url:
-     - /local/custom_ui/state-card-floorplan.html
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-floorplan.html
 
 group:
   Robot Vacuum:
