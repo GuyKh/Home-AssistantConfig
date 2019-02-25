@@ -292,7 +292,7 @@ automation:
     - service: script.turn_on
       data_template:
         entity_id: >
-          {% elif is_state("input_select.vacuum_room", "Bedroom") %}
+          {% if is_state("input_select.vacuum_room", "Bedroom") %}
             script.vacuum_bedroom
           {% elif is_state("input_select.vacuum_room", "Entryway") %}
             script.vacuum_entryway
