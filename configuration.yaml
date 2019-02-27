@@ -103,6 +103,9 @@ map:
 # Track the sun
 sun:
 
+system_health:
+
+
 # Weather prediction
 sensor:
   - platform: systemmonitor
@@ -212,23 +215,24 @@ light:
 
 
 media_player:
-  - platform: kodi
-    host: !secret kodi_ip
-  - platform: cast
-    host: !secret cast_one_ip
-  - platform: cast
-    host: !secret google_home_one_ip
   - platform: samsungtv
     host: !secret samsung_ip
     port: 8001
     mac: !secret samsung_mac
     timeout: 3
+  - platform: kodi
+    host: !secret kodi_ip
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
 
 ifttt:
   key: !secret ifttt_key
+
+googlehome:
+  devices:
+    - host: !secret google_home_one_ip
+    - host: !secret google_home_two_ip
 
 device_tracker:
   - platform: bluetooth_tracker
@@ -346,6 +350,7 @@ freedns:
 mqtt:
   password: !secret mqtt_secret
 
+person:
 automation: !include automations.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
