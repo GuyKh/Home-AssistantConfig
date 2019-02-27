@@ -232,352 +232,352 @@ views:
         name: History
     title: Router
     path: router
-  - name: Xiaomi Vacuum
-    icon: 'mdi:robot-vacuum-variant'
-    background: >-
-      center / cover no-repeat url("/local/lovelace/background/back02.jpg")
-      fixed
+  - path: xiaomi_vacuum
+    type: horizontal
     cards:
-      - type: 'custom:card-modder'
-        card:
-          image: /local/lovelace/xiaomi_vacuum.jpg
-          type: picture-elements
+      - card:
           elements:
             - state_image:
                 'on': /local/lovelace/vacuum/map.png
               tap_action:
                 action: toggle
-              hold_action:
-                action: toggle
-              style:
-                left: 65%
-                top: 90%
-                width: 4.5%
-              image: /local/lovelace/vacuum/map.png
               state_filter:
-                'on': brightness(200%) saturate(1.8)
                 'off': brightness(80%) saturate(0.8)
+                'on': brightness(200%) saturate(1.8)
+              image: /local/lovelace/vacuum/map.png
               entity: input_boolean.vacuum_zone_settings
               type: image
-            - tap_action:
-                action: more-info
-              icon: 'mdi:information'
-              entity: vacuum.xiaomi_vacuum
               style:
-                left: 75%
+                width: 4.5%
                 top: 90%
+                left: 65%
+              hold_action:
+                action: toggle
+            - entity: vacuum.xiaomi_vacuum
+              icon: 'mdi:information'
+              style:
+                top: 90%
+                left: 75%
+              tap_action:
+                action: more-info
               type: icon
-            - tap_action:
+            - entity: vacuum.xiaomi_vacuum
+              icon: 'mdi:bell-ring'
+              style:
+                '--paper-item-icon-color': 'rgb(115, 122, 130)'
+                top: 90%
+                left: 55%
+              tap_action:
                 action: call-service
                 service: vacuum.locate
-              icon: 'mdi:bell-ring'
-              entity: vacuum.xiaomi_vacuum
-              style:
-                left: 55%
-                top: 90%
-                '--paper-item-icon-color': 'rgb(115, 122, 130)'
               type: icon
-            - tap_action:
+            - entity: vacuum.xiaomi_vacuum
+              icon: 'mdi:home'
+              style:
+                '--paper-item-icon-color': 'rgb(115, 122, 130)'
+                top: 90%
+                left: 45%
+              tap_action:
                 action: call-service
                 service: vacuum.return_to_base
-              icon: 'mdi:home'
-              entity: vacuum.xiaomi_vacuum
-              style:
-                left: 45%
-                top: 90%
-                '--paper-item-icon-color': 'rgb(115, 122, 130)'
               type: icon
-            - tap_action:
+            - entity: vacuum.xiaomi_vacuum
+              icon: 'mdi:play'
+              style:
+                '--paper-item-icon-color': 'rgb(115, 122, 130)'
+                top: 90%
+                left: 35%
+              tap_action:
                 action: call-service
                 service: vacuum.start
-              icon: 'mdi:play'
-              entity: vacuum.xiaomi_vacuum
-              style:
-                left: 35%
-                top: 90%
-                '--paper-item-icon-color': 'rgb(115, 122, 130)'
               type: icon
-            - tap_action:
+            - entity: vacuum.xiaomi_vacuum
+              icon: 'mdi:stop'
+              style:
+                '--paper-item-icon-color': 'rgb(115, 122, 130)'
+                top: 90%
+                left: 25%
+              tap_action:
                 action: call-service
                 service: vacuum.stop
-              icon: 'mdi:stop'
-              entity: vacuum.xiaomi_vacuum
-              style:
-                left: 25%
-                top: 90%
-                '--paper-item-icon-color': 'rgb(115, 122, 130)'
               type: icon
-            - type: state-label
-              entity: sensor.vacuum_main_brush
+            - entity: sensor.vacuum_main_brush
               style:
+                font-weight: bold
+                right: 1%
                 color: 'rgb(255, 255, 255)'
                 pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                right: 1%
-                text-shadow: 1px 1px black
                 top: 30%
+                text-shadow: 1px 1px black
                 opacity: 0.8
                 font-size: 90%
-            - type: state-label
-              entity: sensor.vacuum_side_brush
+              type: state-label
+            - entity: sensor.vacuum_side_brush
               style:
+                font-weight: bold
+                right: 1%
                 color: 'rgb(255, 255, 255)'
                 pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                right: 1%
                 top: 78%
                 opacity: 0.8
                 font-size: 90%
-            - type: state-label
-              entity: sensor.vacuum_filter
+              type: state-label
+            - entity: sensor.vacuum_filter
               style:
+                font-weight: bold
+                right: 1%
                 color: 'rgb(255, 255, 255)'
                 pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                right: 1%
                 top: 38%
                 opacity: 0.8
                 font-size: 90%
-            - type: state-label
-              entity: sensor.vacuum_sensor
+              type: state-label
+            - entity: sensor.vacuum_sensor
               style:
+                font-weight: bold
+                right: 1%
                 color: 'rgb(255, 255, 255)'
                 pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                right: 1%
                 top: 60%
                 opacity: 0.8
                 font-size: 90%
-            - type: state-label
-              entity: sensor.vacuum_status
+              type: state-label
+            - entity: sensor.vacuum_status
               style:
+                font-weight: bold
+                right: 79%
                 color: 'rgb(255, 255, 255)'
                 pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                right: 79%
-                text-shadow: 1px 1px black
                 top: 53%
+                text-shadow: 1px 1px black
                 opacity: 0.8
                 font-size: 90%
-            - type: state-label
-              entity: vacuum.xiaomi_vacuum
+              type: state-label
+            - entity: vacuum.xiaomi_vacuum
               style:
+                font-weight: bold
+                right: 41%
                 color: 'rgb(255, 255, 255)'
                 pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                right: 41%
-                text-shadow: 1px 1px black
                 top: 10%
+                text-shadow: 1px 1px black
                 opacity: 0.8
                 font-size: 148%
-            - type: state-label
-              entity: sensor.vacuum_battery
+              type: state-label
+            - entity: sensor.vacuum_battery
               style:
-                color: 'rgb(255, 255, 255)'
-                pointer-events: none
                 font-weight: bold
-                transform: 'translate(0%,-50%)'
+                color: 'rgb(255, 255, 255)'
                 left: 1%
+                pointer-events: none
+                opacity: 0.8
                 top: 34%
-                opacity: 0.8
+                transform: 'translate(0%,-50%)'
                 font-size: 90%
-            - type: state-label
-              entity: sensor.vacuum_cleaning_time
+              type: state-label
+            - entity: sensor.vacuum_cleaning_time
               style:
                 color: '#ffffff'
-                pointer-events: none
-                font-weight: bold
-                transform: 'translate(0%,-50%)'
                 left: 0%
+                pointer-events: none
+                transform: 'translate(0%,-50%)'
                 top: 87%
+                font-weight: bold
                 font-size: 80%
-            - type: state-label
-              entity: sensor.vacuum_cleaned_area
+              type: state-label
+            - entity: sensor.vacuum_cleaned_area
               style:
                 color: '#ffffff'
-                pointer-events: none
-                font-weight: bold
-                transform: 'translate(0%,-50%)'
                 left: 0%
+                pointer-events: none
+                transform: 'translate(0%,-50%)'
                 top: 81%
+                font-weight: bold
                 font-size: 80%
-            - type: state-label
-              entity: sensor.vacuum_weekdays
+              type: state-label
+            - entity: sensor.vacuum_weekdays
               style:
-                color: 'rgb(255, 255, 255)'
-                pointer-events: none
                 font-weight: bold
-                transform: 'translate(0%,-50%)'
+                color: 'rgb(255, 255, 255)'
                 left: 1%
+                pointer-events: none
+                opacity: 0.8
                 top: 75%
-                opacity: 0.8
-                font-size: 90%
-            - type: state-label
-              entity: sensor.vacuum_weekend
-              style:
-                color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                font-weight: bold
                 transform: 'translate(0%,-50%)'
-                left: 1%
-                top: 60%
-                opacity: 0.8
                 font-size: 90%
-            - state_image:
-                'on': /local/lovelace/vacuum/timer.png
-              tap_action:
+              type: state-label
+            - entity: sensor.vacuum_weekend
+              style:
+                font-weight: bold
+                color: 'rgb(255, 255, 255)'
+                left: 1%
+                pointer-events: none
+                opacity: 0.8
+                top: 60%
+                transform: 'translate(0%,-50%)'
+                font-size: 90%
+              type: state-label
+            - tap_action:
                 action: toggle
               state_filter:
-                'on': brightness(200%) saturate(1.8)
                 'off': brightness(80%) saturate(0.8)
-              style:
-                left: 84%
-                top: 90%
-                width: 4.5%
+                'on': brightness(200%) saturate(1.8)
               image: /local/lovelace/vacuum/timer-off.png
-              type: image
               entity: automation.vacuum_schedule_cleaning_on_weekdays
-            - state_image:
+              state_image:
                 'on': /local/lovelace/vacuum/timer.png
-              tap_action:
+              style:
+                width: 4.5%
+                top: 90%
+                left: 84%
+              type: image
+            - tap_action:
                 action: toggle
               state_filter:
-                'on': brightness(200%) saturate(1.8)
                 'off': brightness(80%) saturate(0.8)
-              style:
-                left: 92%
-                top: 90%
-                width: 4.5%
+                'on': brightness(200%) saturate(1.8)
               image: /local/lovelace/vacuum/timer-off.png
-              type: image
               entity: automation.vacuum_schedule_cleaning_on_weekends
+              state_image:
+                'on': /local/lovelace/vacuum/timer.png
+              style:
+                width: 4.5%
+                top: 90%
+                left: 92%
+              type: image
+          image: /local/lovelace/xiaomi_vacuum.jpg
+          type: picture-elements
         style:
-          box-shadow: '3px 3px rgba(0,0,0,0.4)'
-          border-radius: 20px
           border: 'solid 1px rgba(100,100,100,0.3)'
+          border-radius: 20px
           overflow: hidden
+          box-shadow: '3px 3px rgba(0,0,0,0.4)'
+        type: 'custom:card-modder'
       - cards:
-          - type: 'custom:card-modder'
-            card:
-              type: conditional
-              conditions:
-                - state: 'on'
-                  entity: automation.vacuum_schedule_cleaning_on_weekdays
+          - card:
               card:
                 entities:
                   - sensor.vacuum_start_time_weekdays
                   - input_number.vacuum_start_hour_weekdays
                   - input_number.vacuum_start_minutes_weekdays
                 type: entities
+              conditions:
+                - entity: automation.vacuum_schedule_cleaning_on_weekdays
+                  state: 'on'
+              type: conditional
             style:
-              box-shadow: '3px 3px rgba(0,0,0,0.4)'
-              border-radius: 20px
-              background-size: 100% 200px
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-repeat: no-repeat
-          - type: 'custom:card-modder'
-            card:
-              type: conditional
-              conditions:
-                - state: 'on'
-                  entity: input_boolean.vacuum_zone_settings
+              border-radius: 20px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              background-size: 100% 200px
+              box-shadow: '3px 3px rgba(0,0,0,0.4)'
+            type: 'custom:card-modder'
+          - card:
               card:
                 cards:
                   - entities:
                       - input_select.vacuum_fan_speed_list
                       - input_number.vacuum_passes
-                      - input_select.vacuum_zone
+                      - input_select.vacuum_room
                     type: entities
                 type: vertical-stack
+              conditions:
+                - entity: input_boolean.vacuum_zone_settings
+                  state: 'on'
+              type: conditional
             style:
-              box-shadow: '3px 3px rgba(0,0,0,0.4)'
-              border-radius: 20px
-              background-size: 100% 130px
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-repeat: no-repeat
+              border-radius: 20px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              background-size: 100% 130px
+              box-shadow: '3px 3px rgba(0,0,0,0.4)'
+            type: 'custom:card-modder'
         type: vertical-stack
       - cards:
-          - type: 'custom:card-modder'
-            card:
+          - card:
               entities:
-                - name: Zone Settings
-                  entity: input_boolean.vacuum_zone_settings
-                - name: Fan speed
-                  entity: input_select.vacuum_fan_speed_list
+                - entity: input_boolean.vacuum_zone_settings
+                  name: Zone Settings
+                - entity: input_select.vacuum_fan_speed_list
+                  name: Fan speed
               type: glance
             style:
-              box-shadow: '3px 3px rgba(0,0,0,0.4)'
-              border-radius: 20px
-              background-size: 100% 130px
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-repeat: no-repeat
-          - type: 'custom:card-modder'
-            card:
-              heading_state: Value
-              heading_name: Status
+              border-radius: 20px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              background-size: 100% 130px
+              box-shadow: '3px 3px rgba(0,0,0,0.4)'
+            type: 'custom:card-modder'
+          - card:
+              entity: vacuum.xiaomi_vacuum
+              type: 'custom:entity-attributes-card'
               filter:
                 include:
-                  - key: vacuum.xiaomi_vacuum.cleaning_time
+                  - key: vacuum.xiaomi_vacuum_cleaner.cleaning_time
                     unit: minutes
                     name: Cleaning time (last)
-                  - key: vacuum.xiaomi_vacuum.cleaned_area
+                  - key: vacuum.xiaomi_vacuum_cleaner.cleaned_area
                     unit: meters
                     name: Clean surface (last)
-                  - key: vacuum.xiaomi_vacuum.cleaning_count
+                  - key: vacuum.xiaomi_vacuum_cleaner.cleaning_count
                     name: Cleaning cycles (total)
-                  - key: vacuum.xiaomi_vacuum.total_cleaning_time
+                  - key: vacuum.xiaomi_vacuum_cleaner.total_cleaning_time
                     unit: minutes
                     name: Cleaning time (total)
-                  - key: vacuum.xiaomi_vacuum.total_cleaned_area
+                  - key: vacuum.xiaomi_vacuum_cleaner.total_cleaned_area
                     unit: Area
                     name: Clean surface (total)
-              entity: vacuum.xiaomi_vacuum
-              type: 'custom:entity-attributes-card'
-            style:
-              box-shadow: '3px 3px rgba(0,0,0,0.4)'
-              border-radius: 20px
-              background-size: 100% 130px
-              background-color: 'rgba(50,50,50,0.3)'
-              background-image: url("/local/lovelace/background/cardback.png")
-              border: 'solid 1px rgba(100,100,100,0.3)'
-              background-repeat: no-repeat
-          - type: 'custom:card-modder'
-            card:
               heading_state: Value
               heading_name: Status
-              filter:
-                include:
-                  - key: vacuum.xiaomi_vacuum.do_not_disturb
-                    name: Do not disturb
-                  - key: vacuum.xiaomi_vacuum.do_not_disturb_start
-                    name: Do not disturb start
-                  - key: vacuum.xiaomi_vacuum.do_not_disturb_end
-                    name: Do not disturb end
-              entity: vacuum.xiaomi_vacuum
-              type: 'custom:entity-attributes-card'
             style:
-              box-shadow: '3px 3px rgba(0,0,0,0.4)'
-              border-radius: 20px
-              background-size: 100% 130px
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-repeat: no-repeat
+              border-radius: 20px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              background-size: 100% 130px
+              box-shadow: '3px 3px rgba(0,0,0,0.4)'
+            type: 'custom:card-modder'
+          - card:
+              entity: vacuum.xiaomi_vacuum
+              type: 'custom:entity-attributes-card'
+              filter:
+                include:
+                  - key: vacuum.xiaomi_vacuum_cleaner.do_not_disturb
+                    name: Do not disturb
+                  - key: vacuum.xiaomi_vacuum_cleaner.do_not_disturb_start
+                    name: Do not disturb start
+                  - key: vacuum.xiaomi_vacuum_cleaner.do_not_disturb_end
+                    name: Do not disturb end
+              heading_state: Value
+              heading_name: Status
+            style:
+              background-color: 'rgba(50,50,50,0.3)'
+              background-image: url("/local/lovelace/background/cardback.png")
+              background-repeat: no-repeat
+              border-radius: 20px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              background-size: 100% 130px
+              box-shadow: '3px 3px rgba(0,0,0,0.4)'
+            type: 'custom:card-modder'
         type: vertical-stack
-    path: xiaomi_vacuum
-    type: horizontal
+    icon: 'mdi:robot-vacuum-variant'
+    background: >-
+      center / cover no-repeat url("/local/lovelace/background/back02.jpg")
+      fixed
+    name: Xiaomi Vacuum
 title: Home
 resources:
   - url: /local/mini-graph-card-bundle.js?v=0.3.0
