@@ -529,7 +529,7 @@ views:
                     unit: minutes
                     name: Cleaning time (last)
                   - key: vacuum.xiaomi_vacuum_cleaner.cleaned_area
-                    unit: meters
+                    unit: m²
                     name: Clean surface (last)
                   - key: vacuum.xiaomi_vacuum_cleaner.cleaning_count
                     name: Cleaning cycles (total)
@@ -537,7 +537,7 @@ views:
                     unit: minutes
                     name: Cleaning time (total)
                   - key: vacuum.xiaomi_vacuum_cleaner.total_cleaned_area
-                    unit: Area
+                    unit: m²
                     name: Clean surface (total)
               heading_state: Value
               heading_name: Status
