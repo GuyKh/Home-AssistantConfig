@@ -1,0 +1,11 @@
+sensor:
+  - platform: miflora
+    mac: !secret mi_flora_mac
+    force_update: false
+    median: 3
+    monitored_conditions:
+      - moisture
+      - light
+      - temperature
+      - conductivity
+      - battery
