@@ -45,6 +45,15 @@ views:
         title: Persons
         show_header_toggle: false
         type: entities
+      - type: entities
+        entities:
+          - entity: sensor.mi_flora_battery
+          - entity: sensor.mi_flora_conductivity
+          - entity: sensor.mi_flora_light_intensity
+          - entity: sensor.mi_flora_moisture
+          - entity: sensor.mi_flora_temperature
+        title: Flora Plant Monitor
+        show_header_toggle: false
     title: Home
     path: default_view
   - badges: []
