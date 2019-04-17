@@ -61,8 +61,6 @@ frontend:
 config:
 
 http:
-  # Secrets are defined in the file secrets.yaml
-    api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
     base_url: !secret duckdns_url
     ssl_certificate: !secret ssl_certificate
@@ -259,8 +257,9 @@ notify:
     default_channel: '#general'
   - platform: html5
     name: push_notifier
-    gcm_api_key: !secret google_server_key
-    gcm_sender_id: !secret google_sender_key
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
   - name: twilio_whatsapp
     platform: twilio_whatsapp
     from_number: !secret twilio_number
