@@ -14,22 +14,34 @@ homeassistant:
     binary_sensor.vacuum_room:
       custom_ui_state_card: state-card-floorplan
       config: !include ../floorplan_vacuum.yaml
+    switch.vacuum:
+      icon: mdi:robot-vacuum
 
-# binary_sensor:
-#   - platform: mqtt
-#     state_topic: dummy/floorplan/sensor
-#     name: Vacuum Room
+    input_select.vacuum_fan_speed_list:
+      icon: mdi:speedometer
 
-# frontend:
-#   extra_html_url:
-#     - /local/custom_ui/state-card-floorplan.html
+    input_select.vacuum_room:
+      icon: mdi:map-marker
+
+    input_number.vacuum_passes:
+      name: Pass
+      icon: mdi:shuffle-disabled
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: dummy/floorplan/sensor
+    name: Vacuum Room
+
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-floorplan.html
 
 group:
   Robot Vacuum:
     control: hidden
     entities:
       - vacuum.xiaomi_vacuum_cleaner
-#      - input_boolean.disable_daily_vacuum
+      - input_boolean.disable_daily_vacuum
   Vacuum a Room:
     control: hidden
     entities:
@@ -41,18 +53,53 @@ vacuum:
     host: !secret xiaomi_vacuum_ip
     token: !secret xiaomi_vacuum_token
 
-#input_boolean:
-#  daily_vacuum_first_run:
-#    name: Daily Vacuum First Run
-#    initial: off
-#  disable_daily_vacuum:
-#    name: Disable Daily Vacuum Automation
-#    initial: on
-#  disable_dustbin_notification:
-#    name: Disable Dustbin Notification
-#    initial: off
+input_boolean:
+  daily_vacuum_first_run:
+    name: Daily Vacuum First Run
+    initial: off
+  disable_daily_vacuum:
+    name: Disable Daily Vacuum Automation
+    initial: on
+  disable_dustbin_notification:
+    name: Disable Dustbin Notification
+    initial: off
+  vacuum_zone_settings:
+    name: zone settings
+    initial: false
+
+
+switch:
+  - platform: template
+    switches:
+      vacuum:
+        friendly_name: "Vacuum"
+        value_template: "{% if is_state('vacuum.xiaomi_vacuum_cleaner', 'cleaning') %}on{% else %}off{% endif %}"
+        turn_on:
+          service: input_select.select_option
+          entity_id: input_select.vacuum_room
+          data_template:
+            option: "Home"
+        turn_off:
+          service: vacuum.return_to_base
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+        icon_template: mdi:robot-vacuum
+
+#################################################################
+#                                                               #
+#                         input Select                          #
+#                                                               #
+#################################################################
 
 input_select:
+  vacuum_fan_speed_list:
+    name: Type of aspiration
+    options:
+    - Silent
+    - Balanced
+    - Turbo
+    - Maximum power
+
   vacuum_room:
     name: Choose a room to clean
     options:
@@ -66,78 +113,202 @@ input_select:
       - Balcony
       - Study
 
+
+#################################################################
+#                                                               #
+#                         input Number                          #
+#                                                               #
+#################################################################
+
+input_number:
+  vacuum_passes:
+    name: How many times?
+    initial: 1
+    min: 1
+    max: 3
+    step: 1
+  vacuum_start_minutes_weekend:
+    name: Start minute
+    initial: 0
+    min: 0
+    max: 59
+    step: 1
+    mode: slider
+  vacuum_start_hour_weekend:
+    name: Start hour
+    initial: 13
+    min: 0
+    max: 23
+    step: 1
+    mode: slider
+  vacuum_start_minutes_weekdays:
+    name: Start minute
+    initial: 0
+    min: 0
+    max: 59
+    step: 1
+    mode: slider
+  vacuum_start_hour_weekdays:
+    name: Start hour
+    initial: 15
+    min: 0
+    max: 23
+    step: 1
+    mode: slider
+
 script:
-  vacuum_all_except_bedroom_and_ensuite:
-        alias: "Vacuum All Except Bedroom and Ensuite"
-        sequence:
-          - service: vacuum.send_command
-            data:
-              entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[16034,19737,26234,29237,1],[19487,29248,26237,32198,1]]
+  vacuum_set_quiet:
+    sequence:
+      service: vacuum.set_fan_speed
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: Quiet
+
+  vacuum_set_balanced:
+    sequence:
+      service: vacuum.set_fan_speed
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: Balanced
+
+  vacuum_set_turbo:
+    sequence:
+      service: vacuum.set_fan_speed
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: Turbo
+ 
+  vacuum_set_max:
+    sequence:
+      service: vacuum.set_fan_speed
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: Max
+
   vacuum_bedroom:
         alias: "Vacuum Bedroom"
         sequence:
-          - service: vacuum.send_command
+          - service: vacuum.xiaomi_clean_zone
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[26114,22606,30814,26006,1]]
+              repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
+              params: [[25235,26127,28585,30677,1]]
 # Entryway not working correctly
   vacuum_entryway:
         alias: "Vacuum Entryway"
         sequence:
-          - service: vacuum.send_command
+          - service: vacuum.xiaomi_clean_zone
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[23613,20044,26013,25944,1], [23733,20049,27083,22399,1]]
+              repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
+              params: [[29433,27008,32783,28208,1],[28832,23569,30982,27069,1],[25277,23950,28877,26050,1]]
   vacuum_kitchen:
         alias: "Vacuum Kitchen"
         sequence:
-          - service: vacuum.send_command
+          - service: vacuum.xiaomi_clean_zone
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[27167,18145,32367,21795,1]]
+              repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
+              params: [[31365,27277,33015,32227,1]]
   vacuum_living_room:
         alias: "Vacuum Living Room"
         sequence:
-          - service: vacuum.send_command
+          - service: vacuum.xiaomi_clean_zone
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[20524,23178,25924,25828,1]]
-  vacuum_mopping_surfaces:
-        alias: "Vacuum Mopping Surfaces"
-        sequence:
-          - service: vacuum.send_command
-            data:
-              entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[16602,29163,22052,32313,1],[16028,24951,21578,28151,1],[22975,22737,24375,25087,1]]
+              repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
+              params: [[25323,20489,27623,25939,1]]
   vacuum_balcony:
         alias: "Vacuum Balcony"
         sequence:
-          - service: vacuum.send_command
+          - service: vacuum.xiaomi_clean_zone
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[18841,20486,20841,25786,1]]
+              repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
+              params: [[25300,18635,30600,20635,1]]
   vacuum_study:
         alias: "Vacuum Study"
         sequence:
-          - service: vacuum.send_command
+          - service: vacuum.xiaomi_clean_zone
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
-              command: app_zoned_clean
-              params: [[20984,17553,23534,21703,1]]
+              repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
+              params: [[29422,20624,33272,23674,1]]
+              
 sensor:
   - platform: template
     sensors:
-      xiaomi_vacuum_cleaner_status:
+      xiaomi_vacuum_cleaner_status: 
+        entity_id:
+          - vacuum.xiaomi_vacuum_cleaner
         friendly_name: "Xiaomi Vacuum Cleaner Status"
-        value_template: "{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.status }}"
+        value_template: "{{ states.vacuum.xiaomi_vacuum_cleaner }}"
+      xiaomi_vacuum_ip:
+        value_template: !secret xiaomi_vacuum_ip
+      vacuum_start_time_weekdays:
+        friendly_name: 'Start Time (weekdays)'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_number.vacuum_start_hour_weekdays") | int, states("input_number.vacuum_start_minutes_weekdays") | int) }}'
+        entity_id: input_number.vacuum_start_hour_weekdays
+      vacuum_start_time_weekend:
+        friendly_name: 'Start Time (weekend)'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_number.vacuum_start_hour_weekend") | int, states("input_number.vacuum_start_minutes_weekend") | int) }}'
+        entity_id: input_number.vacuum_start_hour_weekend
+      vacuum_status:
+        friendly_name: "Vacuum - State"
+        value_template: "State: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.status }}"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_weekdays:
+        friendly_name: "Vacuum - Weekdays"
+        value_template: ""
+      vacuum_weekend:
+        friendly_name: "Vacuum - Weekend"
+        value_template: ""
+      vacuum_battery:
+        friendly_name: "Vacuum - Battery"
+        value_template: "Battery: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.battery_level | float | int }}"
+        icon_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.battery_icon }}'
+        device_class: battery
+        unit_of_measurement: '%'
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_accessories:
+        friendly_name: "Vacuum - Consumption"
+        value_template: "Consumption"
+      vacuum_operation:
+        friendly_name: "Vacuum - Operations"
+        value_template: "Operations"
+      vacuum_main_brush:
+        friendly_name: "Vacuum - Main Brush"
+        value_template: "Main Brush: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.main_brush_left }} h"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_side_brush:
+        friendly_name: "Vacuum - Side Brush"
+        value_template: "Side Brush: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.side_brush_left }} h"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_filter:
+        friendly_name: "Vacuum - Filter"
+        value_template: "Filter: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.filter_left }} h"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_sensor:
+        friendly_name: "Vacuum - Drawer"
+        value_template: "Drawer: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.sensor_dirty_left }} h"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_fan_speed:
+        friendly_name: "Vacuum - Power"
+        value_template: "Power: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.fan_speed }}"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_cleaning_time:
+        friendly_name: "Cleaning - Time"
+        value_template: "Cleaning Time: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.cleaning_time }}"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      vacuum_cleaned_area:
+        friendly_name: Cleaned Area
+        unit_of_measurement: 'm ²'
+        value_template: "Cleaned - Area {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.cleaned_area }}"
+        entity_id: vacuum.xiaomi_vacuum_cleaner        
+      vacuum_fan_speed_list:
+        friendly_name: "Vacuum - Fan Speed List"
+        value_template: "{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.fan_speed_list }}"
+        entity_id: vacuum.xiaomi_vacuum_cleaner
 
 ###############################################################################
 #                               Automations
@@ -239,9 +410,7 @@ automation:
     - service: script.turn_on
       data_template:
         entity_id: >
-          {% if is_state("input_select.vacuum_room", "All Except Bedroom and Ensuite") %}
-            script.vacuum_all_except_bedroom_and_ensuite
-          {% elif is_state("input_select.vacuum_room", "Bedroom") %}
+          {% if is_state("input_select.vacuum_room", "Bedroom") %}
             script.vacuum_bedroom
           {% elif is_state("input_select.vacuum_room", "Entryway") %}
             script.vacuum_entryway
@@ -249,8 +418,6 @@ automation:
             script.vacuum_kitchen
           {% elif is_state("input_select.vacuum_room", "Living Room") %}
             script.vacuum_living_room
-          {% elif is_state("input_select.vacuum_room", "Mopping Surfaces") %}
-            script.vacuum_mopping_surfaces
           {% elif is_state("input_select.vacuum_room", "Balcony") %}
             script.vacuum_balcony
           {% elif is_state("input_select.vacuum_room", "Study") %}

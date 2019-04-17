@@ -3,6 +3,7 @@
 *
 __pycache__/
 **/__pycache__
+**/__pycache__/*
 **/.___pycache__
 *.py[cod]
 .DS_Store
