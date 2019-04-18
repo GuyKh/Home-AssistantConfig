@@ -587,6 +587,25 @@ views:
       center / cover no-repeat url("/local/lovelace/background/back02.jpg")
       fixed
     name: Xiaomi Vacuum
+- cards:
+      - type: 'custom:mini-graph-card'
+        entities:
+          - entity: sensor.mi_flora_battery
+      - type: 'custom:mini-graph-card'
+        entities:
+          - entity: sensor.mi_flora_conductivity
+      - type: 'custom:mini-graph-card'
+        entities:
+          - entity: sensor.mi_flora_light_intensity
+      - type: 'custom:mini-graph-card'
+        entities:
+          - entity: sensor.mi_flora_moisture
+      - type: 'custom:mini-graph-card'
+        entities:
+          - entity: sensor.mi_flora_temperature
+    badges: []
+    title: Plant
+    icon: 'mdi:tree'
 title: Home
 resources:
   - url: /local/mini-graph-card-bundle.js?v=0.3.0
