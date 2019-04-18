@@ -1,4 +1,4 @@
-  sensor:
+sensor:
   - platform: deluge
     name: localDeluge
     host: !secret deluge_ip
