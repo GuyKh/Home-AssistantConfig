@@ -1,0 +1,35 @@
+shell_command:
+  foscam_preset1: !secret foscam_preset1
+  foscam_preset2: !secret foscam_preset2
+  foscam_preset3: !secret foscam_preset3
+  foscam_preset4: !secret foscam_preset4
+
+camera:
+  - platform: foscam
+    ip: !secret foscam_ip
+    username: !secret foscam_username
+    password: !secret foscam_password
+    port: !secret foscam_port
+    name: Foscam Native
+  - platform: mjpeg
+    mjpeg_url: !secret foscam_url
+    name: Foscam MJPEG
+  - platform: mjpeg
+    mjpeg_url: !secret mjpeg_url
+    name: Android Webcam MJPEG
+    username: !secret webcam_username
+    password: !secret webcam_password
+
+input_boolean:
+  foscam_preset_1:
+    name: Foscam Preset 1
+    initial: on
+  foscam_preset_2:
+    name: Foscam Preset 2
+    initial: on
+  foscam_preset_3:
+    name: Foscam Preset 3
+    initial: on
+  foscam_preset_4:
+    name: Foscam Preset 4
+    initial: on
