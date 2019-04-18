@@ -22,6 +22,27 @@ homeassistant:
        custom_ui_state_card: state-card-custom-ui
        templates:
          theme: "if (state == 'online') return 'info_green'; else return 'alert_red';"
+    'sensor.http_status_*':
+       custom_ui_state_card: state-card-custom-ui
+       templates:
+         theme: "if (state == 'up') return 'info_green'; else return 'alert_red';"
+    'sensor.hline_*':
+       custom_ui_state_card: state-card-hline
+       config:
+         width: 90 
+         height: 0 
+         backgroundcolor: white
+         bordertop: '1px solid black'
+    'sensor.*disk*':
+       icon: mdi:harddisk
+    'sensor.*cpu_system*':
+       entity_picture: /local/icons/cpu.png
+    'sensor.*ram*':
+       entity_picture: /local/icons/ram.png
+    'sensor.deluge*speed*':
+       icon: mdi:speedometer
+    'sensor*table*':
+       icon: mdi:database-search
 
 
 # Show links to resources in log and frontend
