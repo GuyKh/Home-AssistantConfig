@@ -311,13 +311,6 @@ camera:
     username: !secret webcam_username
     password: !secret webcam_password
 
-sonoff:
-  username: !secret sonoff_username
-  password: !secret sonoff_password
-  scan_interval: 60
-  grace_period: 600
-  api_region: 'eu'
-
 twilio:
   account_sid: !secret twilio_account_sid
   auth_token: !secret twilio_auth_token
