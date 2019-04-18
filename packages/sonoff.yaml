@@ -1,3 +1,4 @@
-username: !secret sonoff_username
-password: !secret sonoff_password
-api_region: 'eu'
+sonoff:
+  username: !secret sonoff_username
+  password: !secret sonoff_password
+  api_region: 'eu'
