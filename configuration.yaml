@@ -200,6 +200,10 @@ weather:
     api_key: !secret darksky_token
     mode: daily
 
+sonoff:
+  username: !secret sonoff_username
+  password: !secret sonoff_password
+  api_region: 'eu'
 
 twilio:
   account_sid: !secret twilio_account_sid
