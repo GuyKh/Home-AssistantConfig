@@ -103,10 +103,6 @@ sun:
 
 system_health:
 
-
-# Weather prediction
-sensor:
-
 # Text to speech
 tts:
   - platform: google
