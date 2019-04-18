@@ -146,13 +146,21 @@
   - event: sunset
     platform: sun
   condition:
-    condition: time
-    weekday:
-      - sun
-      - mon
-      - tue
-      - wed
-      - thu
+    condition: and
+    conditions:
+      - condition: time
+        weekday:
+          - sun
+          - mon
+          - tue
+          - wed
+          - thu
+      - condition: state
+        entity_id: 'sensor.guy_presence'
+        state: 'away'
+      - condition: state
+        entity_id: 'sensor.meital_presence'
+        state: 'away'
   action:
   - data:
       entity_id: light.xiaomi_philips_smart_led_ball

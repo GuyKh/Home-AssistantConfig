@@ -61,8 +61,6 @@ frontend:
 config:
 
 http:
-  # Secrets are defined in the file secrets.yaml
-    api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
     base_url: !secret duckdns_url
     ssl_certificate: !secret ssl_certificate
@@ -73,8 +71,8 @@ logger:
 
 
 recorder:
-    # Keep history for 7 days
-    purge_keep_days: 7
+    # Keep history for 3 days
+    purge_keep_days: 3
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -105,80 +103,6 @@ sun:
 
 system_health:
 
-
-# Weather prediction
-sensor:
-  - platform: systemmonitor
-    resources:
-      - type: disk_free
-        arg: /home
-      - type: disk_use_percent
-        arg: /home
-      - type: memory_free
-      - type: memory_use_percent
-      - type: swap_use_percent
-      - type: swap_free
-      - type: load_5m
-      - type: processor_use
-      - type: last_boot
-      - type: network_in
-        arg: enxb827ebcca772
-      - type: network_out
-        arg: enxb827ebcca772
-      - type: network_in
-        arg: wlan0
-      - type: network_out
-        arg: wlan0
-  - platform: filesize
-    file_paths:
-      - !secret db_path
-  - platform: time_date
-    display_options:
-      -  'time'
-      -  'date'
-  - platform: version
-    name: HA Installed Version
-    scan_interval: 86400
-  - platform: deluge
-    name: localDeluge
-    host: !secret deluge_ip
-    port: !secret deluge_port
-    username: !secret deluge_username
-    password: !secret deluge_password
-    monitored_variables:
-      - 'current_status'
-      - 'download_speed'
-      - 'upload_speed'
-  - platform: deluge
-    name: remoteDeluge
-    host: !secret deluge_remote_ip
-    port: !secret deluge_remote_port
-    username: !secret deluge_remote_username
-    password: !secret deluge_remote_password
-    monitored_variables:
-      - 'current_status'
-      - 'download_speed'
-      - 'upload_speed'
-  - platform: template
-    sensors:
-      guy_presence:
-        friendly_name: 'Guy Presence'
-        value_template: '{% if is_state("device_tracker.samsung_s8", "home") or is_state("device_tracker.samsung_s8_bt"  or is_state("device_tracker.samsung_gear_s2", "home" )  or is_state("device_tracker.samsung_gear_s2_bt", "home" ), "home" ) %}home{% else %}away{% endif %}'
-        entity_picture_template: /local/guy.jpg
-      meital_presence:
-        friendly_name: 'Meital Presence'
-        value_template: '{% if is_state(" device_tracker.meital_galaxy_s9", "home") or is_state("device_tracker.meital_s9", "home" ) %}home{% else %}away{% endif %}'
-        entity_picture_template: /local/meital.jpg
-      occupancy_status:
-        friendly_name: 'Master Presence'
-        value_template: '{% if is_state("sensor.guy_presence", "home") or is_state("sensor.meital_presence", "home" ) %}home{% else %}away{% endif %}'
-  - platform: command_line
-    name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone0/temp"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | multiply(0.001) | round(1) }}'    
-
-
 # Text to speech
 tts:
   - platform: google
@@ -191,13 +115,6 @@ cloud:
 #    host: 192.168.1.109
 #    token: !secret vacuum_key
 #    name: Xiaomi Vacuum
-
-binary_sensor:
-  - platform: template
-    sensors:
-      cpu_overload:
-        value_template: "{{ states('sensor.cpu_use')|int > 25 }}"
-        friendly_name: 'cpu above 25 %'
 
 light:
   - platform: xiaomi_miio
@@ -259,8 +176,9 @@ notify:
     default_channel: '#general'
   - platform: html5
     name: push_notifier
-    gcm_api_key: !secret google_server_key
-    gcm_sender_id: !secret google_sender_key
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
   - name: twilio_whatsapp
     platform: twilio_whatsapp
     from_number: !secret twilio_number
@@ -273,76 +191,15 @@ google_assistant:
     - LIGHT
     - GROUP
 
-input_boolean:
-  guy_home:
-    name: Guy is Home Sensor
-    initial: on
-    icon: mdi:cellphone-settings
-  foscam_preset_1:
-    name: Foscam Preset 1
-    initial: on
-  foscam_preset_2:
-    name: Foscam Preset 2
-    initial: on
-  foscam_preset_3:
-    name: Foscam Preset 3
-    initial: on
-  foscam_preset_4:
-    name: Foscam Preset 4
-    initial: on
-
 weather:
   - platform: darksky
     api_key: !secret darksky_token
     mode: daily
 
-camera:
-  - platform: foscam
-    ip: !secret foscam_ip
-    username: !secret foscam_username
-    password: !secret foscam_password
-    port: !secret foscam_port
-    name: Foscam Native
-  - platform: mjpeg
-    mjpeg_url: !secret foscam_url
-    name: Foscam MJPEG
-  - platform: mjpeg
-    mjpeg_url: !secret mjpeg_url
-    name: Android Webcam MJPEG
-    username: !secret webcam_username
-    password: !secret webcam_password
-
-sonoff:
-  username: !secret sonoff_username
-  password: !secret sonoff_password
-  scan_interval: 60
-  grace_period: 600
-  api_region: 'eu'
-
 twilio:
   account_sid: !secret twilio_account_sid
   auth_token: !secret twilio_auth_token
 
-
-switch:
-  - platform: deluge
-    name: localDeluge
-    host: !secret deluge_ip
-    port: !secret deluge_port
-    username: !secret deluge_username
-    password: !secret deluge_password
-  - platform: deluge
-    name: remoteDeluge
-    host: !secret deluge_remote_ip
-    port: !secret deluge_remote_port
-    username: !secret deluge_remote_username
-    password: !secret deluge_remote_password
-
-shell_command:
-  foscam_preset1: !secret foscam_preset1
-  foscam_preset2: !secret foscam_preset2
-  foscam_preset3: !secret foscam_preset3
-  foscam_preset4: !secret foscam_preset4
 
 freedns:
     access_token: !secret freedns_token

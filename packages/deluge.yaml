@@ -1,0 +1,35 @@
+sensor:
+  - platform: deluge
+    name: localDeluge
+    host: !secret deluge_ip
+    port: !secret deluge_port
+    username: !secret deluge_username
+    password: !secret deluge_password
+    monitored_variables:
+      - 'current_status'
+      - 'download_speed'
+      - 'upload_speed'
+  - platform: deluge
+    name: remoteDeluge
+    host: !secret deluge_remote_ip
+    port: !secret deluge_remote_port
+    username: !secret deluge_remote_username
+    password: !secret deluge_remote_password
+    monitored_variables:
+      - 'current_status'
+      - 'download_speed'
+      - 'upload_speed'
+
+switch:
+  - platform: deluge
+    name: localDeluge
+    host: !secret deluge_ip
+    port: !secret deluge_port
+    username: !secret deluge_username
+    password: !secret deluge_password
+  - platform: deluge
+    name: remoteDeluge
+    host: !secret deluge_remote_ip
+    port: !secret deluge_remote_port
+    username: !secret deluge_remote_username
+    password: !secret deluge_remote_password
