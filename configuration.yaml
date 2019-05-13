@@ -63,8 +63,8 @@ config:
 http:
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
     base_url: !secret duckdns_url
-    ssl_certificate: !secret ssl_certificate
-    ssl_key: !secret ssl_key
+#    ssl_certificate: !secret ssl_certificate
+#    ssl_key: !secret ssl_key
 
 logger:
   default: info
@@ -73,6 +73,7 @@ logger:
 recorder:
     # Keep history for 3 days
     purge_keep_days: 3
+    db_url: !secret mariadb_url
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -200,9 +201,13 @@ twilio:
   account_sid: !secret twilio_account_sid
   auth_token: !secret twilio_auth_token
 
+sonoff:
+  username: !secret sonoff_username
+  password: !secret sonoff_password
+  api_region: 'eu'
 
 freedns:
-    access_token: !secret freedns_token
+  access_token: !secret freedns_token
 
 mqtt:
   password: !secret mqtt_secret
