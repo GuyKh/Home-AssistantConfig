@@ -1,3 +1,4 @@
+title: Home
 views:
   - badges: []
     cards:
@@ -8,54 +9,54 @@ views:
           - device_tracker.samsung_gear_s2_bt
           - sensor.guy_presence
           - sensor.meital_presence
-        title: People
         show_header_toggle: false
+        title: People
         type: entities
       - entities:
           - switch.sonoff_10004bd3c1
-        title: Entryway
         show_header_toggle: false
+        title: Entryway
         type: entities
       - entities:
           - light.xiaomi_philips_smart_led_ball
-        title: Living Room
         show_header_toggle: false
+        title: Living Room
         type: entities
-      - type: 'custom:weather-card'
-        entity: weather.dark_sky
+      - entity: weather.dark_sky
+        type: 'custom:weather-card'
       - entities:
           - entity: vacuum.xiaomi_vacuum_cleaner
-          - entity: sensor.xiaomi_vacuum_cleaner_status
-        title: Robot Vacuum
+          - entity: sensor.vacuum_status
         show_header_toggle: false
+        title: Robot Vacuum
         type: entities
       - entities:
           - input_select.vacuum_room
           - binary_sensor.vacuum_room
-        title: Vacuum a Room
         show_header_toggle: false
+        title: Vacuum a Room
         type: entities
-      - theme: Backend-selected
+      - entity: light.xiaomi_philips_smart_led_ball
         name: Xiaomi Philips Smart Led
-        entity: light.xiaomi_philips_smart_led_ball
+        theme: Backend-selected
         type: light
       - entities:
           - entity: person.guy
           - entity: person.meital
-        title: Persons
         show_header_toggle: false
+        title: Persons
         type: entities
-      - type: entities
-        entities:
+      - entities:
           - entity: sensor.mi_flora_battery
           - entity: sensor.mi_flora_conductivity
           - entity: sensor.mi_flora_light_intensity
           - entity: sensor.mi_flora_moisture
           - entity: sensor.mi_flora_temperature
-        title: Flora Plant Monitor
         show_header_toggle: false
-    title: Home
+        title: Flora Plant Monitor
+        type: entities
     path: default_view
+    title: Home
   - badges: []
     cards:
       - entities:
@@ -78,47 +79,99 @@ views:
           - entity: sensor.network_out_wlan0
           - entity: sensor.disk_use_percent_home
           - entity: sensor.home_assistant_v2_db
-        title: System Status
         show_header_toggle: false
+        title: System Status
         type: entities
       - entities:
           - sensor.memory_use_percent
           - sensor.disk_use_percent_home
           - sensor.cpu_temperature
-        type: 'custom:mini-graph-card'
         name: 'CPU Temp, Disk and Memory Use'
+        type: 'custom:mini-graph-card'
       - entities:
           - sensor.processor_use
           - sensor.swap_use_percent
-        type: 'custom:mini-graph-card'
         name: Processor and Swap use
+        type: 'custom:mini-graph-card'
       - entities:
           - sensor.load_5m
         type: 'custom:mini-graph-card'
       - entities:
           - sensor.home_assistant_v2_db
-        type: 'custom:mini-graph-card'
         name: DB Size
-    title: System
+        type: 'custom:mini-graph-card'
+      - cards:
+          - type: 'custom:card-modder'
+            style:
+              border: solid 2px var(--primary-color)
+              transform: scale(0.95)
+            card:
+              color_thresholds:
+                - color: '#e45e65'
+                  value: 10
+                - color: '#e0b400'
+                  value: 5
+                - color: '#0da035'
+                  value: -1
+              entities:
+                - sensor.network_in_enxb827ebcca772
+              group: false
+              hour24: true
+              line_width: 2
+              points_per_hour: 60
+              show:
+                icon: true
+                labels: false
+                name: true
+                state: true
+              type: 'custom:mini-graph-card'
+          - type: 'custom:card-modder'
+            style:
+              border: solid 2px var(--primary-color)
+              transform: scale(0.95)
+            card:
+              color_thresholds:
+                - color: '#e45e65'
+                  value: 2
+                - color: '#e0b400'
+                  value: 1
+                - color: '#0da035'
+                  value: -1
+              entities:
+                - sensor.network_out_enxb827ebcca772
+              group: false
+              hour24: true
+              line_width: 2
+              points_per_hour: 60
+              show:
+                icon: true
+                labels: false
+                name: true
+                state: true
+              type: 'custom:mini-graph-card'
+        type: horizontal-stack
+        title: Bandwidth Monitor
     path: system
+    title: System
   - badges: []
     cards:
-      - type: picture-entity
+      - camera_view: live
         entity: camera.foscam_mjpeg
-      - type: picture-entity
-        entity: camera.foscam_native
-      - type: picture-entity
-        entity: camera.android_webcam_mjpeg
+        type: picture-entity
+      - entity: camera.foscam_native
+        type: picture-entity
+      - entity: camera.android_webcam_mjpeg
+        type: picture-entity
       - entities:
           - input_boolean.foscam_preset_1
           - input_boolean.foscam_preset_2
           - input_boolean.foscam_preset_3
           - input_boolean.foscam_preset_4
-        title: Input boolean
         show_header_toggle: false
+        title: Input boolean
         type: entities
-    title: cameras
     path: cameras
+    title: cameras
   - badges:
       - device_tracker.qcombtd
       - device_tracker.04d6aaa0ae97
@@ -164,8 +217,8 @@ views:
       - device_tracker.meital_galaxy_s9
       - device_tracker.84a466ff2bde
     cards: []
-    title: all devices
     path: all_devices
+    title: all devices
   - badges: []
     cards:
       - entities:
@@ -177,29 +230,29 @@ views:
           - entity: sensor.remotedeluge_up_speed
           - entity: sensor.remotedeluge_status
           - entity: switch.remotedeluge
-        title: Deluge Sensors
         show_header_toggle: false
+        title: Deluge Sensors
         type: entities
-    title: Deluge
     path: deluge
+    title: Deluge
   - badges: []
     cards:
-      - type: 'custom:mini-media-player'
-        entity: media_player.living_room_tv
-      - type: 'custom:mini-media-player'
-        entity: media_player.kodi
-      - type: 'custom:mini-media-player'
-        entity: media_player.googlehome3672
-      - type: 'custom:mini-media-player'
-        entity: media_player.samsung_tv_remote
-      - type: 'custom:mini-media-player'
-        entity: media_player.entryway_speaker
-      - type: 'custom:mini-media-player'
-        entity: media_player.home_group
-      - type: 'custom:mini-media-player'
-        entity: media_player.spotify
-    title: Media
+      - entity: media_player.living_room_tv
+        type: 'custom:mini-media-player'
+      - entity: media_player.kodi
+        type: 'custom:mini-media-player'
+      - entity: media_player.googlehome3672
+        type: 'custom:mini-media-player'
+      - entity: media_player.samsung_tv_remote
+        type: 'custom:mini-media-player'
+      - entity: media_player.entryway_speaker
+        type: 'custom:mini-media-player'
+      - entity: media_player.home_group
+        type: 'custom:mini-media-player'
+      - entity: media_player.spotify
+        type: 'custom:mini-media-player'
     path: media
+    title: Media
   - badges: []
     cards:
       - entities:
@@ -208,12 +261,12 @@ views:
           - entity: sensor.pi_hole_domains_blocked
           - entity: sensor.pi_hole_dns_queries_today
           - entity: sensor.pi_hole_dns_unique_clients
-        title: PiHole Entities
         show_header_toggle: false
+        title: PiHole Entities
         type: entities
     icon: ''
-    title: PiHole
     path: pi_hole
+    title: PiHole
   - badges: []
     cards:
       - entities:
@@ -221,252 +274,253 @@ views:
           - entity: sensor.archer_vr600_bytes_received
           - entity: sensor.archer_vr600_packets_sent
           - entity: sensor.archer_vr600_packets_received
+        show_header_toggle: false
         title: TP Link Absolute
-        show_header_toggle: false
         type: entities
       - entities:
           - entity: sensor.archer_vr600_kbyte_sec_sent
           - entity: sensor.archer_vr600_kbyte_sec_received
           - entity: sensor.archer_vr600_packets_sec_sent
           - entity: sensor.archer_vr600_packets_sec_received
+        show_header_toggle: false
         title: TP Link Per Second
-        show_header_toggle: false
         type: entities
       - entities:
           - entity: sensor.archer_vr600_kbyte_sec_sent
           - entity: sensor.archer_vr600_kbyte_sec_received
           - entity: sensor.archer_vr600_packets_sec_sent
           - entity: sensor.archer_vr600_packets_sec_received
-        type: 'custom:mini-graph-card'
         name: History
-    title: Router
+        type: 'custom:mini-graph-card'
     path: router
-  - path: xiaomi_vacuum
-    type: horizontal
+    title: Router
+  - background: >-
+      center / cover no-repeat url("/local/lovelace/background/back02.jpg")
+      fixed
     cards:
       - card:
           elements:
-            - state_image:
-                'on': /local/lovelace/vacuum/map.png
-              tap_action:
+            - entity: input_boolean.vacuum_zone_settings
+              hold_action:
                 action: toggle
+              image: /local/lovelace/vacuum/map.png
               state_filter:
                 'off': brightness(80%) saturate(0.8)
                 'on': brightness(200%) saturate(1.8)
-              image: /local/lovelace/vacuum/map.png
-              entity: input_boolean.vacuum_zone_settings
-              type: image
+              state_image:
+                'on': /local/lovelace/vacuum/map.png
               style:
-                width: 4.5%
-                top: 90%
                 left: 65%
-              hold_action:
+                top: 90%
+                width: 4.5%
+              tap_action:
                 action: toggle
-            - entity: vacuum.xiaomi_vacuum
+              type: image
+            - entity: vacuum.xiaomi_vacuum_cleaner
               icon: 'mdi:information'
               style:
-                top: 90%
                 left: 75%
+                top: 90%
               tap_action:
                 action: more-info
               type: icon
-            - entity: vacuum.xiaomi_vacuum
+            - entity: vacuum.xiaomi_vacuum_cleaner
               icon: 'mdi:bell-ring'
               style:
                 '--paper-item-icon-color': 'rgb(115, 122, 130)'
-                top: 90%
                 left: 55%
+                top: 90%
               tap_action:
                 action: call-service
                 service: vacuum.locate
               type: icon
-            - entity: vacuum.xiaomi_vacuum
+            - entity: vacuum.xiaomi_vacuum_cleaner
               icon: 'mdi:home'
               style:
                 '--paper-item-icon-color': 'rgb(115, 122, 130)'
-                top: 90%
                 left: 45%
+                top: 90%
               tap_action:
                 action: call-service
                 service: vacuum.return_to_base
               type: icon
-            - entity: vacuum.xiaomi_vacuum
+            - entity: vacuum.xiaomi_vacuum_cleaner
               icon: 'mdi:play'
               style:
                 '--paper-item-icon-color': 'rgb(115, 122, 130)'
-                top: 90%
                 left: 35%
+                top: 90%
               tap_action:
                 action: call-service
                 service: vacuum.start
               type: icon
-            - entity: vacuum.xiaomi_vacuum
+            - entity: vacuum.xiaomi_vacuum_cleaner
               icon: 'mdi:stop'
               style:
                 '--paper-item-icon-color': 'rgb(115, 122, 130)'
-                top: 90%
                 left: 25%
+                top: 90%
               tap_action:
                 action: call-service
                 service: vacuum.stop
               type: icon
             - entity: sensor.vacuum_main_brush
               style:
-                font-weight: bold
-                right: 1%
                 color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                transform: 'translate(0%,-50%)'
-                top: 30%
-                text-shadow: 1px 1px black
-                opacity: 0.8
                 font-size: 90%
+                font-weight: bold
+                opacity: 0.8
+                pointer-events: none
+                right: 1%
+                text-shadow: 1px 1px black
+                top: 30%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_side_brush
               style:
-                font-weight: bold
-                right: 1%
                 color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                transform: 'translate(0%,-50%)'
-                top: 78%
-                opacity: 0.8
                 font-size: 90%
+                font-weight: bold
+                opacity: 0.8
+                pointer-events: none
+                right: 1%
+                top: 78%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_filter
               style:
-                font-weight: bold
-                right: 1%
                 color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                transform: 'translate(0%,-50%)'
-                top: 38%
-                opacity: 0.8
                 font-size: 90%
+                font-weight: bold
+                opacity: 0.8
+                pointer-events: none
+                right: 1%
+                top: 38%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_sensor
               style:
-                font-weight: bold
-                right: 1%
                 color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                transform: 'translate(0%,-50%)'
-                top: 60%
-                opacity: 0.8
                 font-size: 90%
+                font-weight: bold
+                opacity: 0.8
+                pointer-events: none
+                right: 1%
+                top: 60%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_status
               style:
-                font-weight: bold
-                right: 79%
                 color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                transform: 'translate(0%,-50%)'
-                top: 53%
-                text-shadow: 1px 1px black
-                opacity: 0.8
                 font-size: 90%
-              type: state-label
-            - entity: vacuum.xiaomi_vacuum
-              style:
                 font-weight: bold
-                right: 41%
-                color: 'rgb(255, 255, 255)'
-                pointer-events: none
-                transform: 'translate(0%,-50%)'
-                top: 10%
-                text-shadow: 1px 1px black
                 opacity: 0.8
+                pointer-events: none
+                right: 79%
+                text-shadow: 1px 1px black
+                top: 53%
+                transform: 'translate(0%,-50%)'
+              type: state-label
+            - entity: vacuum.xiaomi_vacuum_cleaner
+              style:
+                color: 'rgb(255, 255, 255)'
                 font-size: 148%
+                font-weight: bold
+                opacity: 0.8
+                pointer-events: none
+                right: 41%
+                text-shadow: 1px 1px black
+                top: 10%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_battery
               style:
-                font-weight: bold
                 color: 'rgb(255, 255, 255)'
+                font-size: 90%
+                font-weight: bold
                 left: 1%
-                pointer-events: none
                 opacity: 0.8
+                pointer-events: none
                 top: 34%
                 transform: 'translate(0%,-50%)'
-                font-size: 90%
               type: state-label
             - entity: sensor.vacuum_cleaning_time
               style:
                 color: '#ffffff'
+                font-size: 80%
+                font-weight: bold
                 left: 0%
                 pointer-events: none
-                transform: 'translate(0%,-50%)'
                 top: 87%
-                font-weight: bold
-                font-size: 80%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_cleaned_area
               style:
                 color: '#ffffff'
+                font-size: 80%
+                font-weight: bold
                 left: 0%
                 pointer-events: none
-                transform: 'translate(0%,-50%)'
                 top: 81%
-                font-weight: bold
-                font-size: 80%
+                transform: 'translate(0%,-50%)'
               type: state-label
             - entity: sensor.vacuum_weekdays
               style:
-                font-weight: bold
                 color: 'rgb(255, 255, 255)'
+                font-size: 90%
+                font-weight: bold
                 left: 1%
-                pointer-events: none
                 opacity: 0.8
+                pointer-events: none
                 top: 75%
                 transform: 'translate(0%,-50%)'
-                font-size: 90%
               type: state-label
             - entity: sensor.vacuum_weekend
               style:
-                font-weight: bold
                 color: 'rgb(255, 255, 255)'
+                font-size: 90%
+                font-weight: bold
                 left: 1%
-                pointer-events: none
                 opacity: 0.8
+                pointer-events: none
                 top: 60%
                 transform: 'translate(0%,-50%)'
-                font-size: 90%
               type: state-label
-            - tap_action:
-                action: toggle
+            - entity: automation.vacuum_schedule_cleaning_on_weekdays
+              image: /local/lovelace/vacuum/timer-off.png
               state_filter:
                 'off': brightness(80%) saturate(0.8)
                 'on': brightness(200%) saturate(1.8)
-              image: /local/lovelace/vacuum/timer-off.png
-              entity: automation.vacuum_schedule_cleaning_on_weekdays
               state_image:
                 'on': /local/lovelace/vacuum/timer.png
               style:
-                width: 4.5%
-                top: 90%
                 left: 84%
-              type: image
-            - tap_action:
+                top: 90%
+                width: 4.5%
+              tap_action:
                 action: toggle
+              type: image
+            - entity: automation.vacuum_schedule_cleaning_on_weekends
+              image: /local/lovelace/vacuum/timer-off.png
               state_filter:
                 'off': brightness(80%) saturate(0.8)
                 'on': brightness(200%) saturate(1.8)
-              image: /local/lovelace/vacuum/timer-off.png
-              entity: automation.vacuum_schedule_cleaning_on_weekends
               state_image:
                 'on': /local/lovelace/vacuum/timer.png
               style:
-                width: 4.5%
-                top: 90%
                 left: 92%
+                top: 90%
+                width: 4.5%
+              tap_action:
+                action: toggle
               type: image
           image: /local/lovelace/xiaomi_vacuum.jpg
           type: picture-elements
         style:
           border: 'solid 1px rgba(100,100,100,0.3)'
           border-radius: 20px
-          overflow: hidden
           box-shadow: '3px 3px rgba(0,0,0,0.4)'
+          overflow: hidden
         type: 'custom:card-modder'
       - cards:
           - card:
@@ -484,9 +538,9 @@ views:
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
               background-repeat: no-repeat
-              border-radius: 20px
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-size: 100% 200px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              border-radius: 20px
               box-shadow: '3px 3px rgba(0,0,0,0.4)'
             type: 'custom:card-modder'
           - card:
@@ -506,9 +560,9 @@ views:
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
               background-repeat: no-repeat
-              border-radius: 20px
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-size: 100% 130px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              border-radius: 20px
               box-shadow: '3px 3px rgba(0,0,0,0.4)'
             type: 'custom:card-modder'
         type: vertical-stack
@@ -524,44 +578,43 @@ views:
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
               background-repeat: no-repeat
-              border-radius: 20px
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-size: 100% 130px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              border-radius: 20px
               box-shadow: '3px 3px rgba(0,0,0,0.4)'
             type: 'custom:card-modder'
           - card:
-              entity: vacuum.xiaomi_vacuum
-              type: 'custom:entity-attributes-card'
+              entity: vacuum.xiaomi_vacuum_cleaner
               filter:
                 include:
                   - key: vacuum.xiaomi_vacuum_cleaner.cleaning_time
-                    unit: minutes
                     name: Cleaning time (last)
+                    unit: minutes
                   - key: vacuum.xiaomi_vacuum_cleaner.cleaned_area
-                    unit: m²
                     name: Clean surface (last)
+                    unit: m²
                   - key: vacuum.xiaomi_vacuum_cleaner.cleaning_count
                     name: Cleaning cycles (total)
                   - key: vacuum.xiaomi_vacuum_cleaner.total_cleaning_time
-                    unit: minutes
                     name: Cleaning time (total)
+                    unit: minutes
                   - key: vacuum.xiaomi_vacuum_cleaner.total_cleaned_area
-                    unit: m²
                     name: Clean surface (total)
-              heading_state: Value
+                    unit: m²
               heading_name: Status
+              heading_state: Value
+              type: 'custom:entity-attributes-card'
             style:
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
               background-repeat: no-repeat
-              border-radius: 20px
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-size: 100% 130px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              border-radius: 20px
               box-shadow: '3px 3px rgba(0,0,0,0.4)'
             type: 'custom:card-modder'
           - card:
               entity: vacuum.xiaomi_vacuum
-              type: 'custom:entity-attributes-card'
               filter:
                 include:
                   - key: vacuum.xiaomi_vacuum_cleaner.do_not_disturb
@@ -570,24 +623,42 @@ views:
                     name: Do not disturb start
                   - key: vacuum.xiaomi_vacuum_cleaner.do_not_disturb_end
                     name: Do not disturb end
-              heading_state: Value
               heading_name: Status
+              heading_state: Value
+              type: 'custom:entity-attributes-card'
             style:
               background-color: 'rgba(50,50,50,0.3)'
               background-image: url("/local/lovelace/background/cardback.png")
               background-repeat: no-repeat
-              border-radius: 20px
-              border: 'solid 1px rgba(100,100,100,0.3)'
               background-size: 100% 130px
+              border: 'solid 1px rgba(100,100,100,0.3)'
+              border-radius: 20px
               box-shadow: '3px 3px rgba(0,0,0,0.4)'
             type: 'custom:card-modder'
         type: vertical-stack
     icon: 'mdi:robot-vacuum-variant'
-    background: >-
-      center / cover no-repeat url("/local/lovelace/background/back02.jpg")
-      fixed
     name: Xiaomi Vacuum
-title: Home
+    path: xiaomi_vacuum
+    type: horizontal
+  - badges: []
+    cards:
+      - entities:
+          - entity: sensor.mi_flora_battery
+        type: 'custom:mini-graph-card'
+      - entities:
+          - entity: sensor.mi_flora_conductivity
+        type: 'custom:mini-graph-card'
+      - entities:
+          - entity: sensor.mi_flora_light_intensity
+        type: 'custom:mini-graph-card'
+      - entities:
+          - entity: sensor.mi_flora_moisture
+        type: 'custom:mini-graph-card'
+      - entities:
+          - entity: sensor.mi_flora_temperature
+        type: 'custom:mini-graph-card'
+    icon: 'mdi:tree'
+    title: Plant
 resources:
   - url: /local/mini-graph-card-bundle.js?v=0.3.3
     type: module
