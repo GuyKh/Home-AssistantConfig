@@ -105,7 +105,7 @@ system_health:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
 
 # Cloud
 cloud:
@@ -179,9 +179,9 @@ notify:
     vapid_pub_key: !secret vapid_pub_key
     vapid_prv_key: !secret vapid_prv_key
     vapid_email: !secret vapid_email
-  - name: twilio_whatsapp
-    platform: twilio_whatsapp
-    from_number: !secret twilio_number
+#  - name: twilio_whatsapp
+#    platform: twilio_whatsapp
+#    from_number: !secret twilio_number
 
 google_assistant:
   project_id: homeassistant-8d58d
