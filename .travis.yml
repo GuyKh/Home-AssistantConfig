@@ -5,6 +5,7 @@ before_install:
   - mv travis_secrets.yaml secrets.yaml
   - echo 'Hello World' >> home-assistant_v2.db
 install:
+  - pip3 install websocket-client
   - pip3 install homeassistant
 script:
   - hass -c . --script check_config
