@@ -665,3 +665,7 @@ resources:
     type: js
   - url: /local/vertical-stack-in-card.js?v=0.1.2
     type: js
+  - url: /local/text-divider-row.js
+    type: module
+  - url: /local/upcoming-media-card.js?v=0.1.2
+    type: js

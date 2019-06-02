@@ -1,0 +1,17 @@
+sensor:
+- platform: radarr
+  api_key: !secret radarr_key
+  host: !secret radarr_ip
+  port: !secret radarr_port
+
+  # ################################################################### #
+  #               --- Radarr Upcoming Media --                          #
+  # https://github.com/custom-components/sensor.radarr_upcoming_media   #
+  # ################################################################### #
+- platform: radarr_upcoming_media
+  api_key: !secret radarr_key
+  host: !secret radarr_ip
+  port: !secret radarr_port
+  days: 2
+  ssl: false
+  max: 10
