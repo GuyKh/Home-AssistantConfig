@@ -89,6 +89,7 @@ views:
         type: 'custom:mini-graph-card'
       - entities:
           - sensor.home_assistant_v2_db
+          - sensor.hass_db_size
         name: DB Size
         type: 'custom:mini-graph-card'
       - cards:
