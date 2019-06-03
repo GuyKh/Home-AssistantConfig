@@ -1,0 +1,14 @@
+media_player:
+  - platform: kodi
+    host: !secret kodi_ip
+
+  # ################################################################### #
+  #               --- Radarr Upcoming Media --                          #
+  # https://github.com/custom-components/sensor.kodi_recently_added   #
+  # ################################################################### #
+sensor:
+  - platform: kodi_recently_added
+    host: !secret kodi_ip
+    username: !secret kodi_username
+    password: !secret kodi_password
+    port: !secret kodi_port
