@@ -210,6 +210,9 @@ freedns:
 mqtt:
   password: !secret mqtt_secret
 
+hacs:
+  token: !secret github_token
+
 person:
 automation: !include automations.yaml
 group: !include groups.yaml
