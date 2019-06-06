@@ -33,3 +33,34 @@ input_boolean:
   foscam_preset_4:
     name: Foscam Preset 4
     initial: on
+
+# AUTOMATIONS:
+automation:
+- alias: foscam_preset_1
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_1
+  action:
+    service: shell_command.foscam_preset1
+  id: 9f2099c4b39745118efc5602a24c03c0
+- alias: foscam_preset_2
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_2
+  action:
+    service: shell_command.foscam_preset2
+  id: 4a461cd975174886a1a744d0b6c66196
+- alias: foscam_preset_3
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_3
+  action:
+    service: shell_command.foscam_preset3
+  id: d9160f749dce49c1be85f9a9371da63f
+- alias: foscam_preset_4
+  trigger:
+    platform: state
+    entity_id: input_boolean.foscam_preset_4
+  action:
+    service: shell_command.foscam_preset4
+  id: 5e4ec1dd013a4f4a9cf82c9fafc30db4

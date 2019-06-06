@@ -1,0 +1,19 @@
+sensor:
+  platform: rpi_power
+  text_state: true
+
+automation: 
+- id: 'rpi_power_issue'
+  alias: Power Problem Notification
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.rpi_power_status
+    above: 0
+    for:
+      minutes: 1
+  condition:
+  action:
+    service: persistent_notification.create
+    data:
+      message: "Charger reported {{ states.sensor.rpi_power_status.state }}"
+      title: "Power Supply Issue"
