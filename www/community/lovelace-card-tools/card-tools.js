@@ -9,6 +9,7 @@ class {
     }
   }
 
+<<<<<<< HEAD
   static deprecationWarning() {
     if(window.cardTools_deprecationWarning) return;
     console.warn("One or more of your lovelace plugins are using the functions cardTools.litElement(), cardTools.litHtml() or cardTools.hass(). Those are replaced with better alternatives and will be removed a some point in the future.")
@@ -18,34 +19,55 @@ class {
   window.cardTools_deprecationWarning = true;
   }
 
+=======
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
   static get LitElement() {
     return Object.getPrototypeOf(customElements.get('home-assistant-main'));
   }
   static litElement() { // Backwards compatibility - deprecated
+<<<<<<< HEAD
     this.deprecationWarning();
+=======
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
     return this.LitElement;
   }
 
   static get LitHtml() {
+<<<<<<< HEAD
     return this.LitElement.prototype.html;
   }
   static litHtml() { // Backwards compatibility - deprecated
     this.deprecationWarning();
+=======
+    return this.litElement().prototype.html;
+  }
+  static litHtml() { // Backwards compatibility - deprecated
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
     return this.LitHtml;
   }
 
   static get LitCSS() {
+<<<<<<< HEAD
     return this.LitElement.prototype.css;
+=======
+    return this.litElement().prototype.css;
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
   }
 
   static get hass() {
     var hass = function() { // Backwards compatibility - deprecated
+<<<<<<< HEAD
       this.deprecationWarning();
+=======
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
       return hass;
     }
     for (var k in document.querySelector('home-assistant').hass)
       hass[k] = document.querySelector('home-assistant').hass[k];
+<<<<<<< HEAD
     hass.original = document.querySelector('home-assistant').hass;
+=======
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
     return hass;
   }
 
@@ -64,7 +86,11 @@ class {
       root = root && root.querySelector("home-assistant-main");
       root = root && root.shadowRoot;
       root = root && root.querySelector("app-drawer-layout partial-panel-resolver");
+<<<<<<< HEAD
       root = root && root.shadowRoot || root;
+=======
+      root = root && root.shadowRoot;
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
       root = root && root.querySelector("ha-panel-lovelace");
       root = root && root.shadowRoot;
       root = root && root.querySelector("hui-root");
@@ -81,7 +107,11 @@ class {
     root = root && root.querySelector("home-assistant-main");
     root = root && root.shadowRoot;
     root = root && root.querySelector("app-drawer-layout partial-panel-resolver");
+<<<<<<< HEAD
     root = root && root.shadowRoot || root;
+=======
+    root = root && root.shadowRoot;
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
     root = root && root.querySelector("ha-panel-lovelace")
     root = root && root.shadowRoot;
     root = root && root.querySelector("hui-root")
@@ -183,7 +213,10 @@ class {
       switch: "toggle",
       vacuum: "toggle",
       water_heater: "climate",
+<<<<<<< HEAD
       input_datetime: "input-datetime",
+=======
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
     };
 
     if(!config || typeof config !== "object" || (!config.entity && !config.type)) {
@@ -301,7 +334,11 @@ class {
       const lhs = this.parseTemplateString(str[1]);
       const rhs = this.parseTemplateString(str[3]);
       var expr = ''
+<<<<<<< HEAD
       if(parseFloat(lhs) != lhs)
+=======
+      if(!parseFloat(lhs))
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
         expr = `"${lhs}" ${str[2]} "${rhs}"`;
       else
         expr = `${parseFloat(lhs)} ${str[2]} ${parseFloat(rhs)}`

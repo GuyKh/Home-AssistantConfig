@@ -13,7 +13,10 @@ class VerticalStackInCard extends HTMLElement {
         this.style.boxShadow = "var(--ha-card-box-shadow, 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2))";
         this.style.borderRadius = "var(--ha-card-border-radius, 2px)";
         this.style.background = "var(--paper-card-background-color)";
+<<<<<<< HEAD
         this.style.display = "block";
+=======
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
 
         const root = this.shadowRoot;
         while (root.hasChildNodes()) {

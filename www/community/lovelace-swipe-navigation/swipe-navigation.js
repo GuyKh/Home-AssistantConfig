@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 let root = document.querySelector("home-assistant");
 root = root && root.shadowRoot;
 root = root && root.querySelector("home-assistant-main");
@@ -28,6 +29,24 @@ let skip_tabs =
     : [];
 
 const appLayout = root.shadowRoot.querySelector("ha-app-layout");
+=======
+// CONFIG START //////////////////////////////////////////////////////////////
+
+let swipe_amount = 15; // Minimum percent of screen needed to swipe, 1-100.
+let skip_tabs = []; // List of tabs to skip over. e.g., [1,3,5].
+let wrap = true; // Wrap around first and last tabs. Set as false to disable.
+let prevent_default = false; // Prevent browsers swipe action for back/forward.
+
+// EXPERIMENTAL OPTIONS //////////////////////////////////////////////////////
+// These options may not work as expected. ///////////////////////////////////
+
+let animate = "none"; // none, swipe, fade, or flip. Must be in quotes.
+
+// CONFIG END ////////////////////////////////////////////////////////////////
+
+swipe_amount /= Math.pow(10, 2);
+const appLayout = findAppLayout();
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
 const view = appLayout.querySelector('[id="view"]');
 const tabContainer = appLayout.querySelector("paper-tabs");
 let xDown, yDown, xDiff, yDiff, activeTab, firstTab, lastTab, left;
@@ -38,7 +57,11 @@ appLayout.addEventListener("touchmove", handleTouchMove, { passive: false });
 appLayout.addEventListener("touchend", handleTouchEnd, { passive: true });
 
 function handleTouchStart(event) {
+<<<<<<< HEAD
   let ignored = ["APP-HEADER", "HA-SLIDER", "SWIPE-CARD", "HUI-MAP-CARD"];
+=======
+  let ignored = ["APP-HEADER", "HA-SLIDER", "SWIPE-CARD"];
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
   if (typeof event.path == "object") {
     for (let element of event.path) {
       if (element.nodeName == "HUI-VIEW") break;
@@ -76,6 +99,33 @@ function handleTouchEnd() {
   xDown = yDown = xDiff = yDiff = null;
 }
 
+<<<<<<< HEAD
+=======
+function findAppLayout() {
+  try {
+    let panelResolver = document
+      .querySelector("home-assistant")
+      .shadowRoot.querySelector("home-assistant-main")
+      .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver");
+    if (panelResolver.shadowRoot) {
+      return panelResolver.shadowRoot
+        .querySelector("ha-panel-lovelace")
+        .shadowRoot.querySelector("hui-root")
+        .shadowRoot.querySelector("ha-app-layout");
+    } else {
+      return document
+        .querySelector("home-assistant")
+        .shadowRoot.querySelector("home-assistant-main")
+        .shadowRoot.querySelector("ha-panel-lovelace")
+        .shadowRoot.querySelector("hui-root")
+        .shadowRoot.querySelector("ha-app-layout");
+    }
+  } catch (e) {
+    console.log("Can't find 'ha-app-layout'.");
+  }
+}
+
+>>>>>>> cc38e15fc03e0e60e67ae46023cfe2c16da694c0
 function filterTabs() {
   tabs = tabs.filter(element => {
     return (
