@@ -8,6 +8,7 @@ before_install:
   - sudo apt-get install -y libudev-dev
   - HA_VERSION=$(<.HA_VERSION)
   - pip3 install websocket-client
+  - pip3 install av
 install:
   - pip3 install homeassistant==${HA_VERSION}
 script:
