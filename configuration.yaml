@@ -63,6 +63,10 @@ config:
 http:
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
     base_url: !secret duckdns_url
+    use_x_forwarded_for: true
+    trusted_proxies:
+      - !secret traefik_ip
+
 #    ssl_certificate: !secret ssl_certificate
 #    ssl_key: !secret ssl_key
 
@@ -86,7 +90,9 @@ updater:
   include_used_components: true
 
 # Discover some devices automatically
-#discovery:
+discovery:
+  ignore:
+    - yeelight
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -114,27 +120,6 @@ tts:
 # Cloud
 cloud:
 
-#vacuum:
-#  - platform: xiaomi_miio
-#    host: 192.168.1.109
-#    token: !secret vacuum_key
-#    name: Xiaomi Vacuum
-
-light:
-  - platform: xiaomi_miio
-    name: Xiaomi Philips Smart LED Ball
-    host: !secret miio_hue_ip
-    token: !secret xiaomi_hue_token
-    model: philips.light.bulb
-#  - platform: yeelight
-#    devices:
-#      !secret yeelight_ip
-#        name: Living Room
-#        transition: 1000
-#        use_music_mode: True #(defaults to False)
-#        save_on_change: False #(defaults to True)
-
-
 media_player:
   - platform: samsungtv
     host: !secret samsung_ip
@@ -148,10 +133,10 @@ media_player:
 ifttt:
   key: !secret ifttt_key
 
-googlehome:
-  devices:
-    - host: !secret google_home_one_ip
-    - host: !secret google_home_two_ip
+#googlehome:
+#  devices:
+#    - host: !secret google_home_one_ip
+#    - host: !secret google_home_two_ip
 
 device_tracker:
   - platform: bluetooth_tracker
@@ -205,18 +190,23 @@ twilio:
 sonoff:
   username: !secret sonoff_username
   password: !secret sonoff_password
-  api_region: 'eu'
+  api_region: 'as'
 
 freedns:
   access_token: !secret freedns_token
 
-mqtt:
-  password: !secret mqtt_secret
+#mqtt:
+#  password: !secret mqtt_secret
 
 hacs:
   token: !secret github_token
 
+sensor:
+  - platform: authenticated
+
 stream:
+
+shopping_list:
 
 person:
 automation: !include automations.yaml

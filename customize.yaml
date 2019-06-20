@@ -15,3 +15,5 @@ input_boolean.weather:
   config:
     weather: weather.yweather
     sun: sun.sun
+#light.yeelink-light-color1_miio72928166:
+#  friendly_name: Living Room
