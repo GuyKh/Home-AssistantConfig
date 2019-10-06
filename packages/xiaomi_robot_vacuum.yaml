@@ -192,7 +192,7 @@ script:
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
-              params: [[25235,26127,28585,30677,1]]
+              params: [[25153,26030,28603,30630,1]]
 # Entryway not working correctly
   vacuum_entryway:
         alias: "Vacuum Entryway"
@@ -201,7 +201,7 @@ script:
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
-              params: [[29433,27008,32783,28208,1],[28832,23569,30982,27069,1],[25277,23950,28877,26050,1]]
+              params: [[28643,23737,30893,26987,1],[25111,23913,29111,26013,1]]
   vacuum_kitchen:
         alias: "Vacuum Kitchen"
         sequence:
@@ -209,7 +209,7 @@ script:
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
-              params: [[31365,27277,33015,32227,1]]
+              params: [[30984,27457,32584,32207,1],[29121,27095,32721,28395,1]]
   vacuum_living_room:
         alias: "Vacuum Living Room"
         sequence:
@@ -217,7 +217,7 @@ script:
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
-              params: [[25323,20489,27623,25939,1]]
+              params: [[25156,20284,28606,25934,1]]
   vacuum_balcony:
         alias: "Vacuum Balcony"
         sequence:
@@ -225,7 +225,7 @@ script:
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
-              params: [[25300,18635,30600,20635,1]]
+              params: [[25209,18681,30409,20331,1]]
   vacuum_study:
         alias: "Vacuum Study"
         sequence:
@@ -233,7 +233,7 @@ script:
             data:
               entity_id: vacuum.xiaomi_vacuum_cleaner
               repeats_template: '{{states.input_number.vacuum_passes.state|int}}'
-              params: [[29422,20624,33272,23674,1]]
+              params: [[29214,20631,33114,23631,1]]
               
 sensor:
   - platform: template

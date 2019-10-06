@@ -1,4 +1,5 @@
-switch:
-  platform: hadockermon
-  host: 192.168.1.102
-  port: 8126
+docker_monitor:
+  name: Cubox
+  url: "192.168.1.102:2376"
+#- docker_monitor:
+#    name: Pi

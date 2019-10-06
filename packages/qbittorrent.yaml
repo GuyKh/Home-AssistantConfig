@@ -1,0 +1,5 @@
+sensor:
+  - platform: qbittorrent
+    url: !secret q_host
+    username: !secret q_username
+    password: !secret q_password
