@@ -1,0 +1,12 @@
+media_player:
+  # Use the Python ADB implementation without authentication
+  - platform: androidtv
+    name: MiBox Android TV
+    host: !secret mi_box_ip
+    adb_server_ip: 127.0.0.1
+    apps:
+        org.xbmc.kodi: "Kodi"
+        com.example.idan.plusplus: "Idan Plus"
+        com.google.android.youtube.tv: "Youtube"
+    turn_on_command: "input keyevent 224"
+    turn_off_command: "input keyevent 223"

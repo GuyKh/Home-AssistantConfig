@@ -1,9 +1,8 @@
 - action:
-  - data:
+  - service: tts.watson_tts_say
+    data_template:
       entity_id: media_player.entryway_speaker
-      language: en
-      message: Starting Home Assistant on Raspberry Pi.
-    service: tts.google_say
+      message: "<speak>\n    Starting Home Assistant on Raspberry Pi\n</speak>\n"
   alias: Home Assistant Starts
   condition:
   - after: 08:00:00
@@ -21,11 +20,11 @@
   condition: []
   id: '1519076828273'
   trigger:
-  - entity_id: device_tracker.samsung_s8_bt
+  - entity_id: device_tracker.samsung_s10_bt
     from: not_home
     platform: state
     to: home
-  - entity_id: device_tracker.samsung_s8
+  - entity_id: device_tracker.samsung_s10
     from: not_home
     platform: state
     to: home
@@ -37,11 +36,11 @@
   condition: []
   id: '1519076828223'
   trigger:
-  - entity_id: device_tracker.samsung_s8_bt
+  - entity_id: device_tracker.samsung_s10_bt
     from: home
     platform: state
     to: not_home
-  - entity_id: device_tracker.samsung_s8
+  - entity_id: device_tracker.samsung_s10
     from: home
     platform: state
     to: not_home
@@ -54,11 +53,10 @@
       message: Wellcome Home, Guy.
       title: Home Assistant
     service: notify.ha_tele
-  - data:
+  - data_template:
       entity_id: media_player.entryway_speaker
-      language: en
-      message: Hi Guy, Welcome Home
-    service: tts.google_say
+      message: <speak> Hi Guy <break time=".9s" /> Welcome home </speak>
+    service: tts.watson_tts_say
   alias: Guy is Home notification
   condition:
   - after: '16:00:00'
@@ -89,11 +87,11 @@
     entity_id: input_boolean.guy_home
     to: 'on'
   action:
-  - data:
+  - data_template:
       entity_id: media_player.entryway_speaker
       language: en
-      message: Hi Guy, Welcome Home
-    service: tts.google_say
+      message: <speak> Hi Guy <break time=".9s" /> Welcome home </speak>
+    service: tts.watson_tts_say
   condition:
   - condition: time
     after: '16:00:00'
@@ -120,27 +118,30 @@
   condition:
     condition: and
     conditions:
-      - condition: time
-        weekday:
-          - sun
-          - mon
-          - tue
-          - wed
-          - thu
-      - condition: state
-        entity_id: 'sensor.guy_presence'
-        state: 'away'
-      - condition: state
-        entity_id: 'sensor.meital_presence'
-        state: 'away'
+    - condition: time
+      weekday:
+      - sun
+      - mon
+      - tue
+      - wed
+      - thu
+    - condition: state
+      entity_id: sensor.guy_presence
+      state: away
+    - condition: state
+      entity_id: sensor.meital_presence
+      state: away
   action:
   - data:
       entity_id: light.xiaomi_philips_smart_led_ball
     service: light.turn_on
   - data:
+      entity_id: switch.sonoff_10009d1dd4
+    service: switch.turn_on
+  - data:
       entity_id: switch.sonoff_10004bd3c1
     service: switch.turn_on
-- id: 'ifttt'
+- id: ifttt
   trigger:
     platform: event
     event_type: ifttt_webhook_received
@@ -150,3 +151,23 @@
     service_template: '{{ trigger.event.data.service }}'
     data_template:
       entity_id: '{{ trigger.event.data.entity_id }}'
+- id: '1567883984787'
+  alias: Welcome Home Guy Person
+  trigger:
+  - entity_id: person.guy
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - after: 08:00:00
+    before: '22:00:00'
+    condition: time
+  action:
+#  - service: tts.watson_tts_say
+#    data_template:
+#      entity_id: media_player.entryway_speaker
+#      message: "<speak>{{ ('Wellcome home','Good to have you back', 'The king has returned', 'How was it outside', 'Nice weather out there', 'Long time no see', 'I missed you')|random }}, Guy</speak>"
+  - service: tts.watson_tts_say
+    entity_id: media_player.entryway_speaker
+    data_template:
+      message: "{{ ('Wellcome home','Good to have you back', 'The king has returned', 'How was it outside', 'Nice weather out there', 'Long time no see', 'I missed you')|random }}, Guy"
