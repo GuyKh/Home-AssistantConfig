@@ -1,0 +1,31 @@
+
+# Text to speech
+tts:
+  - platform: watson_tts
+    watson_apikey: !secret watson_apikey
+    watson_url: !secret watson_url
+  - platform: google_translate
+
+input_text:
+  announce_google:
+    name: Announce Google
+    initial: What should I say?
+
+script:
+  announce_tts:
+    sequence:
+      - service: tts.watson_tts_say
+        data_template:
+          entity_id: media_player.home_group
+          message: "<speak>{{ states.input_text.announce_google.state }}</speak>"
+
+automation:
+- alias: Announce Input Over Google Homes
+  trigger:
+    - platform: state
+      entity_id: input_text.announce_google
+  action:
+    - service: tts.watson_tts_say
+      data_template:
+        entity_id: media_player.home_group
+        message: "<speak>{{ states.input_text.announce_google.state }}</speak>"

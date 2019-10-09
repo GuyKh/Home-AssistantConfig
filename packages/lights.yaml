@@ -1,0 +1,20 @@
+light:
+    ################################
+    ### Xiaomi Philips Hue light ###
+    ################################
+
+  - platform: xiaomi_miio
+    name: Xiaomi Philips Smart LED Ball
+    host: !secret miio_hue_ip
+    token: !secret xiaomi_hue_token
+    model: philips.light.bulb
+
+
+
+    ######################
+    ### Yeelight light ###
+    ######################
+yeelight:
+  devices:
+    192.168.1.113:
+      name: Yeelight

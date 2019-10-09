@@ -1,0 +1,74 @@
+sensor:
+- platform: rest
+  name: Home Assistant Docker Latest Image Build
+  scan_interval: 300
+  resource: https://registry.hub.docker.com/v1/repositories/homeassistant/home-assistant/tags
+  headers:
+    Content-Type: application/json
+    User-Agent: Home Assistant REST sensor
+  value_template: >-
+        {% for image_build in value_json | reverse if image_build.name.split(".")[0]=="0"  %}
+          {% if loop.first %}
+               {{image_build.name}}
+          {% endif %}
+        {% endfor %}  
+- platform: rest
+  name: Home Assistant Released Version
+  scan_interval: 300
+  json_attributes:
+     - body
+      - html_url
+  resource: https://api.github.com/repos/home-assistant/home-assistant/releases/latest
+  username: !secret github_username
+  password: !secret github_access_token
+  authentication: basic
+  value_template: '{{ value_json.tag_name }}'
+  headers:
+    Accept: application/vnd.github.v3+json
+    Content-Type: application/json
+    User-Agent: Home Assistant REST sensor
+ 
+automation:
+- alias: Home Assistant Release Check
+  initial_state: on
+  trigger:
+  - platform: template
+    value_template: >-
+      {% if states.sensor.home_assistant_released_version %}
+        {% if states.sensor.current_version %}
+          {% if states.sensor.home_assistant_docker_latest_image_build %}
+            {% if states('sensor.home_assistant_released_version') != states('sensor.current_version') %}
+              {{ states('sensor.home_assistant_released_version') == states('sensor.home_assistant_docker_latest_image_build') }}
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+  - platform: homeassistant
+    event: start
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: >-
+          {% if states.sensor.home_assistant_released_version %}
+            {% if states.sensor.current_version %}
+              {% if states.sensor.home_assistant_docker_latest_image_build %}
+                {% if states('sensor.home_assistant_released_version') != states('sensor.current_version') %}
+                  {{ states('sensor.home_assistant_released_version') == states('sensor.home_assistant_docker_latest_image_build') }}
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endif %}
+  action:
+  - service: persistent_notification.create
+    data_template:
+      title: Home Assistant Release
+      notification_id: hass_release_{{states('sensor.home_assistant_docker_latest_image_build')}}
+      message: >-
+        A new version of Home Assistant is available, {{ states('sensor.home_assistant_released_version') }}, while current version is {{states('sensor.current_version') }}
+       
+        Link: {{states.sensor.home_assistant_released_version.attributes.html_url}}
+       
+        Release notes:
+       
+        {{states.sensor.home_assistant_released_version.attributes.body.split("## All changes")[0]}}

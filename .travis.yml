@@ -3,11 +3,15 @@ python:
   - "3.6"
 before_install:
   - mv travis_secrets.yaml secrets.yaml
+  - sed -i 's/^stream:/#stream:/g' configuration.yaml
   - touch home-assistant_v2.db
   - touch home-assistant.log
   - sudo apt-get install -y libudev-dev
+  - sudo apt-get install -y python-dev pkg-config ipython
+  - sudo apt-get install -y bluetooth libbluetooth-dev
+  - sudo apt-get install -y libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev
   - HA_VERSION=$(<.HA_VERSION)
-  - pip3 install websocket-client
+  - pip3 install websocket-client pybluez
 install:
   - pip3 install homeassistant==${HA_VERSION}
 script:
