@@ -3,6 +3,7 @@ python:
   - "3.6"
 before_install:
   - mv travis_secrets.yaml secrets.yaml
+  - sed -i 's/^stream:/#stream:/g' configuration.yaml
   - touch home-assistant_v2.db
   - touch home-assistant.log
   - sudo apt-get install -y libudev-dev
