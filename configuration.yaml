@@ -74,6 +74,7 @@ http:
 logger:
   default: info
 
+mobile_app:
 
 recorder:
     # Keep history for 3 days
@@ -122,11 +123,11 @@ system_health:
 cloud:
 
 media_player:
-  - platform: samsungtv
-    host: !secret samsung_ip
-    port: 8001
-    mac: !secret samsung_mac
-    timeout: 3
+#  - platform: samsungtv
+#    host: !secret samsung_ip
+#    port: 8001
+#    mac: !secret samsung_mac
+#    timeout: 3
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret

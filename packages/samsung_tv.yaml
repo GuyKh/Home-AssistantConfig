@@ -1,0 +1,7 @@
+media_player:
+  - platform: samsungtv_custom
+    host: !secret samsung_ip
+    port: 8001
+    mac: !secret samsung_mac
+    protocol: ctl
+    sourcelist: '{"Reciever": "KEY_HDMI1"}'

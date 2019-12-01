@@ -1,0 +1,7 @@
+- id: '1574841523442'
+  name: Entryway
+  entities:
+    media_player.entryway_speaker:
+      state: 'off'
+    switch.sonoff_10009d1dd4:
+      state: 'off'

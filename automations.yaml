@@ -167,7 +167,14 @@
 #    data_template:
 #      entity_id: media_player.entryway_speaker
 #      message: "<speak>{{ ('Wellcome home','Good to have you back', 'The king has returned', 'How was it outside', 'Nice weather out there', 'Long time no see', 'I missed you')|random }}, Guy</speak>"
-  - service: tts.watson_tts_say
+#  - service: tts.watson_tts_say
+#    entity_id: media_player.entryway_speaker
+#    data_template:
+#      message: "{{ ('Wellcome home','Good to have you back', 'The king has returned', 'How was it outside', 'Nice weather out there', 'Long time no see', 'I missed you')|random }}, Guy"
+  - service: tts.google_translate_say
     entity_id: media_player.entryway_speaker
     data_template:
       message: "{{ ('Wellcome home','Good to have you back', 'The king has returned', 'How was it outside', 'Nice weather out there', 'Long time no see', 'I missed you')|random }}, Guy"
+  - service: light.turn_off
+    data:
+      entity_id: light.xiaomi_philips_smart_led_ball

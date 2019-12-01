@@ -46,3 +46,5 @@ __pycache__/
 ip_bans.yaml
 secrets.yaml
 known_devices.yaml
+
+!.pyc
